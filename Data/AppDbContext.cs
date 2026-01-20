@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TeknoForce.Data.Models;
 
-namespace Rizz.Data
+namespace TeknoForce.Data
 {
     public class AppDbContext : DbContext
     {
@@ -9,7 +10,6 @@ namespace Rizz.Data
         {
         }
 
-        // İleride tablolar buraya gelecek
-        // public DbSet<User> Users { get; set; }
+        public DbSet<AdminUser> AdminUsers { get; set; }
     }
 }

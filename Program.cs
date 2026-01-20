@@ -1,6 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
-using Rizz.Data;
+using TeknoForce.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +11,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
+
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -25,6 +27,8 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 
