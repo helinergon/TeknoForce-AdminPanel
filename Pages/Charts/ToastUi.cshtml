@@ -1,0 +1,231 @@
+@page "/charts/toast-ui"
+@model ToastUiModel
+
+
+@{
+    ViewBag.title = "Rizz";
+}
+
+
+@section styles {
+    <link href="/libs/tui-chart/tui-chart.min.css" rel="stylesheet" type="text/css"/>
+}
+
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Bar Chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div dir="ltr" id="bar-charts"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Column Chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div dir="ltr" id="column-charts"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Line chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div dir="ltr" id="line-charts"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Area chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div dir="ltr" id="area-charts"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Bubble chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div dir="ltr" id="bubble-charts"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Scatter chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div dir="ltr" id="scatter-charts"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Pie chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div dir="ltr" id="pie-charts"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Donut pie chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div dir="ltr" id="donut-charts"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Heatmap chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div dir="ltr" id="heatmap-charts"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Treemap chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div dir="ltr" id="treemap-charts"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Map chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div dir="ltr" id="map-charts"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Boxplot chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div dir="ltr" id="boxplot-charts"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Bullet chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div dir="ltr" id="bullet-charts"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Radial chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div dir="ltr" id="radial-charts"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+
+
+@section scripts {
+    <script src="/libs/tui-chart/tui-chart-all.min.js"></script>
+    <script src="/libs/tui-chart/maps/usa.js"></script>
+    <script src="/js/pages/toast-ui.init.js"></script>
+}

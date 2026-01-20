@@ -1,0 +1,158 @@
+@page "/charts/echarts"
+@model EchartsModel
+
+
+@{
+    ViewBag.title = "Rizz";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Line Chart-1</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div class="h-80" id="line_1"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Line Chart-2</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div class="h-80" id="line_2"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Bar Chart-1</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div class="h-80" id="bar_1"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Bar Chart-2</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div class="h-80" id="bar_2"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Bar Chart-3</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div class="h-80" id="bar_3"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Bar Chart-4</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div class="h-80" id="bar_4"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Pie Chart-1</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div class="h-80" id="pie_1"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Pie Chart-2</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div class="h-80" id="pie_2"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Pie Chart-3</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div class="h-80" id="pie_3"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-body text-center">
+                <h3 class="fw-medium fs-16">You can use more echarts.</h3>
+                <a class="btn btn-primary" href="/" target="_blank">More Charts</a>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+
+
+@section scripts {
+    <script src="/libs/echarts/echarts.min.js"></script>
+    <script src="/js/pages/echarts.init.js"></script>
+}

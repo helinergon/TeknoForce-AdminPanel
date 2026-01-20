@@ -1,0 +1,104 @@
+@page "/charts/chartjs"
+@model ChartjsModel
+
+
+@{
+    ViewBag.title = "Rizz";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Line Chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <canvas height="300" id="lineChart" width="300"></canvas>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Donut Chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <canvas height="300" id="doughnut"></canvas>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Bar Chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <canvas height="300" id="bar"></canvas>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Polar Chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <canvas height="300" id="polarArea"></canvas>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Pie Chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <canvas height="300" id="pie"></canvas>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Radar Chart</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <canvas height="300" id="radar"></canvas>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+
+
+@section scripts {
+    <script src="/libs/chart.js/chart.min.js"></script>
+    <script src="/js/pages/chartjs.init.js"></script>
+}

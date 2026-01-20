@@ -1,0 +1,110 @@
+@page "/maps/leaflet"
+@model LeafletModel
+
+
+@{
+    ViewBag.title = "Rizz";
+}
+
+
+@section styles {
+    <link href="/libs/leaflet/leaflet.css" rel="stylesheet"/>
+}
+
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Leaflet Quick Start Guide</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div class="" id="Leaf_default" style="height: 400px"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Bounds Extend</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div class="" id="Bounds_Extend" style="height: 400px"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Vector Bounds</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div class="" id="Vector_bounds" style="height: 400px"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Moov Canvas</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div class="" id="Moov_Canvas" style="height: 400px"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Array Map</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div class="" id="Array_Map" style="height: 400px"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    <div class="col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Simple Vector Map</h4>
+                    </div><!--end col-->
+                </div> <!--end row-->
+            </div><!--end card-header-->
+            <div class="card-body pt-0">
+                <div class="" id="V_Simple" style="height: 400px"></div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+
+
+@section scripts {
+    <script src="/libs/leaflet/leaflet.js"></script>
+    <script src="/js/pages/leaflet-map.init.js"></script>
+}
