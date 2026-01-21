@@ -5,34 +5,245 @@
 }
 
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
     <meta charset="utf-8" />
-    <title>Admin Login</title>
+    <title>TeknoForce Admin Login</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+    <style>
+
+        body
+        {
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+            background: linear-gradient(270deg, #0b1c2d, #112b46, #0b1c2d);
+            background-size: 600% 600%;
+            animation: bgMove 14s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @@keyframes bgMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .bg-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-8deg);
+            font-size: 160px;
+            font-weight: 900;
+            letter-spacing: 16px;
+            color: rgba(255, 138, 0, 0.22);
+            user-select: none;
+            white-space: nowrap;
+            animation: pulse 6s ease-in-out infinite;
+            filter: blur(0.6px);
+        }
+
+        @@keyframes pulse {
+            0%, 100% {
+                opacity: 0.55;
+                transform: translate(-50%, -50%) rotate(-8deg) scale(1);
+            }
+
+            50% {
+                opacity: 0.9;
+                transform: translate(-50%, -50%) rotate(-8deg) scale(1.05);
+            }
+        }
+
+        .login-card {
+            position: relative;
+            z-index: 2;
+            width: 420px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 42px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.4);
+            animation: cardIn 0.9s ease;
+        }
+
+        @@keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .brand {
+            text-align: center;
+            font-weight: 900;
+            font-size: 30px;
+            color: #ff8a00;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #ff8a00;
+            margin-bottom: 32px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control {
+            height: 48px;
+            border-radius: 14px;
+        }
+
+        .input-group-text {
+            background: transparent;
+            border-left: none;
+            cursor: pointer;
+        }
+
+        .btn-login {
+            height: 52px;
+            border-radius: 16px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff8a00, #ffb347);
+            border: none;
+            color: #fff;
+            transition: all .3s ease;
+        }
+
+            .btn-login:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 12px 25px rgba(255,138,0,0.45);
+            }
+
+            .btn-login:disabled {
+                opacity: 0.85;
+            }
+
+        .error-text {
+            color: #dc3545;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        /* FULLSCREEN TRANSITION OVERLAY */
+        .transition-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(11,28,45,0.95);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            animation: fadeIn .4s ease forwards;
+        }
+
+            .transition-overlay.show {
+                display: flex;
+            }
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .transition-text {
+            margin-top: 20px;
+            color: #fff;
+            font-size: 15px;
+            letter-spacing: .5px;
+        }
+    </style>
 </head>
 <body>
 
-    <h2>Admin Login</h2>
+    <div class="bg-text">TEKNOFORCE</div>
 
-    @if (ViewData["Error"] != null)
-    {
-        <p style="color:red">@ViewData["Error"]</p>
-    }
+    <div class="login-card">
+        <div class="brand">TEKNOFORCE</div>
+        <div class="subtitle">YÖNETİCİ PANEL GİRİŞİ</div>
 
-    <form method="post">
-        <div>
-            <label>Kullanıcı Adı</label><br />
-            <input asp-for="Username" />
-        </div>
+        @if (ViewData["Error"] != null)
+        {
+            <div class="error-text">@ViewData["Error"]</div>
+        }
 
-        <div>
-            <label>Şifre</label><br />
-            <input asp-for="Password" type="password" />
-        </div>
+        <form method="post" id="loginForm">
+            <div class="mb-3">
+                <input asp-for="Username" class="form-control" placeholder="Kullanıcı Adı" required />
+            </div>
 
-        <br />
-        <button type="submit">Giriş Yap</button>
-    </form>
+            <div class="mb-4 input-group">
+                <input asp-for="Password" type="password" class="form-control" id="passwordInput" placeholder="Şifre" required />
+                <span class="input-group-text" onclick="togglePassword()">
+                    <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                </span>
+            </div>
+
+            <button type="submit" class="btn btn-login w-100" id="loginBtn">
+                <span id="btnText">Giriş Yap</span>
+                <span id="btnLoader" class="spinner-border spinner-border-sm ms-2 d-none"></span>
+            </button>
+        </form>
+    </div>
+
+    <!-- TRANSITION -->
+    <div class="transition-overlay" id="transition">
+        <div class="spinner-border text-warning"></div>
+        <div class="transition-text">Dashboard’a yönlendiriliyor…</div>
+    </div>
+
+    <script>
+        const form = document.getElementById("loginForm");
+        const btn = document.getElementById("loginBtn");
+        const btnText = document.getElementById("btnText");
+        const loader = document.getElementById("btnLoader");
+        const overlay = document.getElementById("transition");
+
+        form.addEventListener("submit", () => {
+            btn.disabled = true;
+            btnText.innerText = "Giriş Yapılıyor";
+            loader.classList.remove("d-none");
+            overlay.classList.add("show");
+        });
+
+        function togglePassword() {
+            const input = document.getElementById("passwordInput");
+            const icon = document.getElementById("eyeIcon");
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.replace("fa-eye-slash", "fa-eye");
+            }
+        }
+    </script>
 
 </body>
 </html>

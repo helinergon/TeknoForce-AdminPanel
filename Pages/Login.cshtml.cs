@@ -1,4 +1,4 @@
-
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TeknoForce.Data;
@@ -26,6 +26,7 @@ namespace TeknoForce.Pages
 
         public IActionResult OnPost()
         {
+
             var admin = _context.AdminUsers
                 .FirstOrDefault(x => x.Username == Username && x.Password == Password);
 
@@ -35,9 +36,10 @@ namespace TeknoForce.Pages
                 return Page();
             }
 
-            HttpContext.Session.SetString("AdminLogin", "true");
-            return RedirectToPage("/Index");
+            HttpContext.Session.SetInt32("AdminUserId", admin.Id);
+            return RedirectToPage("/Dashboard/Index");
         }
+
     }
 
 }
