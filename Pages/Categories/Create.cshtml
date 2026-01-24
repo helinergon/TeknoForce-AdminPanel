@@ -1,0 +1,31 @@
+﻿@page
+@model TeknoForce.Pages.Categories.CreateModel
+
+@{
+    ViewData["Title"] = "Yeni Kategori";
+    Layout = "_AdminLayout";
+}
+
+<h3>Yeni Kategori</h3>
+<div asp-validation-summary="All" class="text-danger"></div>
+<form method="post" class="mt-4">
+
+    <div class="mb-3">
+        <label class="form-label">Marka</label>
+        <select asp-for="Category.BrandId"
+                asp-items="Model.BrandList"
+                class="form-select"
+                required>
+            <option value="0">Marka Seçiniz</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Kategori Adı</label>
+        <input asp-for="Category.Name" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+    <a asp-page="./Index" class="btn btn-secondary ms-2">Geri</a>
+
+</form>

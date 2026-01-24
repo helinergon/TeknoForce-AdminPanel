@@ -1,0 +1,57 @@
+﻿@page "{id:int}"
+@model TeknoForce.Pages.Brands.EditModel
+
+@{
+    ViewData["Title"] = "Marka Düzenle";
+    Layout = "_AdminLayout";
+}
+
+<h3>Marka Düzenle</h3>
+
+<form method="post" enctype="multipart/form-data" class="mt-4">
+
+    <input type="hidden" asp-for="Brand.BrandId" />
+
+    <!-- Marka Adı (readonly) -->
+    <div class="mb-3">
+        <label class="form-label">Marka Adı</label>
+        <input asp-for="Brand.Name" class="form-control" readonly />
+    </div>
+
+    <!-- Açıklama -->
+    <div class="mb-3">
+        <label class="form-label">Açıklama</label>
+        <textarea asp-for="Brand.Description" class="form-control" rows="3"></textarea>
+    </div>
+
+    <!-- Mevcut Logo -->
+    @if (!string.IsNullOrEmpty(Model.Brand.LogoPath))
+    {
+        <div class="mb-3">
+            <label class="form-label">Mevcut Logo</label><br />
+            <img src="@Model.Brand.LogoPath" style="height:80px;" />
+        </div>
+    }
+
+    <!-- Yeni Logo Upload -->
+    <div class="mb-3">
+        <label class="form-label">Yeni Logo</label>
+        <input type="file" asp-for="LogoFile" class="form-control" />
+        <small class="text-muted">PNG veya JPG önerilir</small>
+    </div>
+
+    <!-- Aktif / Pasif -->
+    <div class="form-check mb-3">
+        <input class="form-check-input" asp-for="Brand.IsActive" />
+        <label class="form-check-label">Aktif</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Kaydet
+    </button>
+
+    <a asp-page="./Index" class="btn btn-secondary ms-2">
+        Geri
+    </a>
+
+</form>

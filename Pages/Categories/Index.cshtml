@@ -1,0 +1,56 @@
+﻿@page
+@model TeknoForce.Pages.Categories.IndexModel
+
+@{
+    ViewData["Title"] = "Kategoriler";
+    Layout = "_AdminLayout";
+}
+
+<h3>Kategoriler</h3>
+
+<div class="mb-3">
+    <a asp-page="./Create" class="btn btn-success">
+        + Yeni Kategori
+    </a>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Marka</th>
+            <th>Kategori Adı</th>
+            <th>Durum</th>
+            <th>Oluşturma</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model.Categories)
+        {
+            <tr>
+                <td>@category.CategoryId</td>
+                <td>@category.Brand?.Name</td>
+                <td>@category.Name</td>
+                <td>
+                    @if (category.IsActive)
+                    {
+                        <span class="badge bg-success">Aktif</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Pasif</span>
+                    }
+                </td>
+                <td> @( (category.UpdatedDate ?? category.CreatedDate) .ToString("dd.MM.yyyy") )</td>
+                <td>
+                    <a asp-page="./Edit"
+                       asp-route-id="@category.CategoryId"
+                       class="btn btn-sm btn-primary">
+                        Düzenle
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
