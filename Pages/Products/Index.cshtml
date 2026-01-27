@@ -1,15 +1,107 @@
 ﻿@page
 @model TeknoForce.Pages.Products.IndexModel
+
 @{
-    Layout = "_AdminLayout";
     ViewData["Title"] = "Ürünler";
     Layout = "_AdminLayout";
 }
-<div class="card shadow-sm">
-    <div class="card-body">
-        <h3 class="mb-2">@ViewData["Title"]</h3>
-        <p class="text-muted">
-            Bu sayfa yakında aktif olacak.
-        </p>
-    </div>
+
+<h3>Ürünler</h3>
+
+<div class="mb-3">
+    <a asp-page="./Create" class="btn btn-success">
+        + Yeni Ürün
+    </a>
 </div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Ürün</th>
+            <th>Marka</th>
+            <th>Kategori</th>
+            <th>Fiyat</th>
+            <th>Stok</th>
+            <th>Durum</th>
+            <th>Özet</th>
+            <th>Görsel</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model.Products.Any())
+        {
+            foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.ProductId</td>
+
+                    <td>
+                        <strong>@product.Name</strong>
+                    </td>
+
+                    <td>@product.Brand?.Name</td>
+                    <td>@product.Category?.Name</td>
+
+                    <td>@product.Price ₺</td>
+                    <td>@product.Stock</td>
+
+                    <td>
+                        @if (product.IsActive)
+                        {
+                            <span class="badge bg-success">Aktif</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Pasif</span>
+                        }
+                    </td>
+
+                    <td style="font-size:13px">
+                        @if (product.Specification != null)
+                        {
+                            <div><strong>Motor:</strong> @product.Specification.MotorPowerHP</div>
+                            <div><strong>Ağırlık:</strong> @product.Specification.WeightKg kg</div>
+                        }
+                        else
+                        {
+                            <span class="text-muted">—</span>
+                        }
+                    </td>
+
+                    <td class="text-center">
+                        @if (product.Images.Any(i => i.IsCover))
+                        {
+                            <span class="text-success">✔ Kapak</span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">—</span>
+                        }
+                    </td>
+
+                    <td>
+                        <a asp-page="./Edit"
+                           asp-route-id="@product.ProductId"
+                           class="btn btn-sm btn-primary">
+                            Düzenle
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="10" class="text-center text-muted">
+                    Henüz ürün eklenmedi.
+                </td>
+            </tr>
+        }
+    </tbody>
+
+
+
+</table>  

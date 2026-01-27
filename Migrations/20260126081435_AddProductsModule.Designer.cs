@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TeknoForce.Data;
 
@@ -11,9 +12,11 @@ using TeknoForce.Data;
 namespace TeknoForce.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260126081435_AddProductsModule")]
+    partial class AddProductsModule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,20 +200,14 @@ namespace TeknoForce.Migrations
 
             modelBuilder.Entity("TeknoForce.Data.Models.ProductSpecification", b =>
                 {
-                    b.Property<int>("ProductSpecificationId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductSpecificationId"));
 
                     b.Property<string>("MaxNozzle")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MotorPowerHP")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
 
                     b.Property<string>("SetContent")
                         .HasColumnType("nvarchar(max)");
@@ -224,10 +221,7 @@ namespace TeknoForce.Migrations
                     b.Property<decimal?>("WeightKg")
                         .HasColumnType("decimal(10,2)");
 
-                    b.HasKey("ProductSpecificationId");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique();
+                    b.HasKey("ProductId");
 
                     b.ToTable("ProductSpecifications");
                 });

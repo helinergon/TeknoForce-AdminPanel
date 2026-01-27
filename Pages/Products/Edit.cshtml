@@ -1,0 +1,182 @@
+﻿@page
+@model TeknoForce.Pages.Products.EditModel
+@{
+    ViewData["Title"] = "Ürün";
+    Layout = "_AdminLayout";
+}
+
+<h3>Ürün</h3>
+<form method="post" asp-page="./Edit">
+    @Html.AntiForgeryToken()
+
+<!-- 1️⃣ GENEL BİLGİLER -->
+<div class="card mb-4">
+        <input type="hidden" asp-for="Product.ProductId" />
+    <div class="card-header">
+        <strong>Genel Bilgiler</strong>
+    </div>
+    <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Marka</label>
+                    <select class="form-select"
+                            asp-for="Product.BrandId"
+                            asp-items="Model.BrandList">
+                        <option value="">Marka seç</option>
+                    </select>
+
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Kategori</label>
+                    <select class="form-select"
+                            asp-for="Product.CategoryId"
+                            asp-items="Model.CategoryList">
+                        <option value="">Kategori seç</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Ürün Adı</label>
+                    <input asp-for="Product.Name"  type="text" class="form-control" placeholder="Ürün adı girin" />
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label class="form-label">Fiyat</label>
+                        <input asp-for="Product.Price" type="number" class="form-control" placeholder="₺" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Stok</label>
+                        <input asp-for="Product.Stock" type="number" class="form-control" />
+                </div>
+
+                <div class="col-md-4 d-flex align-items-end">
+                    <div class="form-check form-switch">
+                            <input asp-for="Product.IsActive" class="form-check-input" type="checkbox">
+                        <label class="form-check-label">Aktif</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-end">
+                <button type="submit" class="btn btn-success">
+                    Kaydet
+                </button>
+            </div>
+    </div>
+</div>
+
+<!-- 2️⃣ TEKNİK ÖZELLİKLER -->
+<div class="card mb-4">
+        <input type="hidden" asp-for="Specification.ProductId" />
+    <div class="card-header">
+        <strong>Teknik Özellikler</strong>
+    </div>
+    <div class="card-body">
+
+            <div class="row mb-3 align-items-center">
+                <div class="col-md-4 fw-semibold">
+                    MAXIMUM NOZUL (MEME)
+                </div>
+                <div class="col-md-8">
+                        <input asp-for="Specification.MaxNozzle" type="text" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row mb-3 align-items-center">
+                <div class="col-md-4 fw-semibold">
+                    MOTOR GÜCÜ (HP)
+                </div>
+                <div class="col-md-8">
+                        <input asp-for="Specification.MotorPowerHP" type="text" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row mb-3 align-items-center">
+                <div class="col-md-4 fw-semibold">
+                    AĞIRLIK (KG)
+                </div>
+                <div class="col-md-8">
+                        <input asp-for="Specification.WeightKg" type="number" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4 fw-semibold">
+                    SET İÇERİĞİ
+                </div>
+                <div class="col-md-8">
+                        <textarea asp-for="Specification.SetContent" class="form-control" rows="2"></textarea>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4 fw-semibold">
+                    KULLANIM ALANLARI
+                </div>
+                <div class="col-md-8">
+                        <textarea asp-for="Specification.UsageAreas" class="form-control" rows="2"></textarea>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4 fw-semibold">
+                    KULLANILABİLİR MALZEMELER
+                </div>
+                <div class="col-md-8">
+                        <textarea asp-for="Specification.UsableMaterials" class="form-control" rows="2"></textarea>
+                </div>
+            </div>
+    </div>
+</div>
+
+<!-- 3️⃣ GÖRSELLER -->
+<div class="card mb-4">
+    <div class="card-header">
+        <strong>Görseller</strong>
+    </div>
+    <div class="card-body">
+
+            <!-- Görsel Yükleme -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Görsel Yükle</label>
+                <input type="file" class="form-control" multiple />
+                <small class="text-muted">
+                    Birden fazla görsel seçebilirsiniz. Kapak görseli sonradan seçilecektir.
+                </small>
+            </div>
+
+            <hr />
+
+            <!-- Mevcut Görseller -->
+            <div class="row g-3">
+                <!-- Tek görsel kartı -->
+                <div class="col-md-3">
+                    <div class="border rounded p-2 text-center">
+                        <img src="https://via.placeholder.com/150"
+                             class="img-fluid mb-2"
+                             alt="Ürün Görseli" />
+
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="coverImage">
+                            <label class="form-check-label">
+                                Kapak
+                            </label>
+                        </div>
+
+                        <button class="btn btn-sm btn-outline-danger">
+                            Sil
+                        </button>
+                    </div>
+                </div>
+
+                <!-- İleride burası foreach ile dönecek -->
+            </div>
+
+        </div>
+    
+</div>
+</form>

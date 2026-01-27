@@ -44,17 +44,27 @@
                         <td>
                             @if (brand.IsActive)
                             {
-                                <span class="badge bg-success">Aktif</span>
+                                <span class="status active">
+                                    <i class="fa-solid fa-circle-check"></i> Aktif
+                                </span>
                             }
                             else
                             {
-                                <span class="badge bg-secondary">Pasif</span>
+                                <span class="status passive">
+                                    <i class="fa-solid fa-circle-xmark"></i> Pasif
+                                </span>
                             }
                         </td>
-                        <td>@brand.CreatedDate.ToString("dd.MM.yyyy")</td>
+                        <td>
+                        <small class="update-time">
+                        🕒 @((brand.UpdatedDate ?? brand.CreatedDate)
+                                                .ToString("dd.MM.yyyy HH:mm"))
+                        </small>
+                        </td>
                         <td>
                             <a asp-page="./Edit"
-                            asp-route-id="@brand.BrandId">
+                            asp-route-id="@brand.BrandId"
+                               class="btn btn-sm btn-primary">
                             Düzenle
                            </a>
                         </td>

@@ -34,10 +34,34 @@ namespace TeknoForce.Data
                     CreatedDate = new DateTime(2026, 1, 1)
                 }
 
+
             ); 
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Product>()
+                 .HasOne(p => p.Category)
+                 .WithMany()
+                 .HasForeignKey(p => p.CategoryId)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Brand)
+                .WithMany()
+                .HasForeignKey(p => p.BrandId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Specification)
+                .WithOne(s => s.Product)
+                .HasForeignKey<ProductSpecification>(s => s.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
+
         public DbSet<Category> Categories { get; set; }
         public DbSet<AdminUser> AdminUsers { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductSpecification> ProductSpecifications { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
 
     }
 
