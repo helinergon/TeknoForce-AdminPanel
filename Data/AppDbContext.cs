@@ -53,7 +53,7 @@ namespace TeknoForce.Data
                 .HasOne(p => p.Specification)
                 .WithOne(s => s.Product)
                 .HasForeignKey<ProductSpecification>(s => s.ProductId)
-                .OnDelete(DeleteBehavior.Cascade);
+        .OnDelete(DeleteBehavior.Cascade);
 
         }
 

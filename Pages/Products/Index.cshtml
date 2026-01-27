@@ -7,9 +7,47 @@
 }
 
 <h3>Ürünler</h3>
+<form method="get" class="row g-2 mb-3">
+
+    <div class="col-md-3">
+        <select asp-for="BrandId"
+                asp-items="Model.BrandList"
+                class="form-select">
+            <option value="">Tüm Markalar</option>
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <select asp-for="CategoryId"
+                asp-items="Model.CategoryList"
+                class="form-select">
+            <option value="">Tüm Kategoriler</option>
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <select asp-for="IsActive" class="form-select">
+            <option value="">Tümü</option>
+            <option value="true">Aktif</option>
+            <option value="false">Pasif</option>
+        </select>
+    </div>
+
+    <div class="col-md-3 d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+            Filtrele
+        </button>
+
+        <a asp-page="./Index" class="btn btn-outline-secondary">
+            Temizle
+        </a>
+    </div>
+
+</form>
+
 
 <div class="mb-3">
-    <a asp-page="./Create" class="btn btn-success">
+    <a asp-page="./Edit" class="btn btn-success">
         + Yeni Ürün
     </a>
 </div>
@@ -49,14 +87,13 @@
                     <td>@product.Stock</td>
 
                     <td>
-                        @if (product.IsActive)
-                        {
-                            <span class="badge bg-success">Aktif</span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-secondary">Pasif</span>
-                        }
+                        <form method="post" asp-page-handler="ToggleStatus">
+                            <input type="hidden" name="id" value="@product.ProductId" />
+                            <button type="submit"
+                                    class="btn btn-sm @(product.IsActive ? "btn-success" : "btn-secondary")">
+                                @(product.IsActive ? "Aktif" : "Pasif")
+                            </button>
+                        </form>
                     </td>
 
                     <td style="font-size:13px">
@@ -88,6 +125,17 @@
                            class="btn btn-sm btn-primary">
                             Düzenle
                         </a>
+                        <form method="post"
+                              asp-page-handler="Delete"
+                              onsubmit="return confirm('Bu ürünü silmek istediğine emin misin?');"
+                              class="d-inline">
+
+                            <input type="hidden" name="id" value="@product.ProductId" />
+
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Sil
+                            </button>
+                        </form>
                     </td>
                 </tr>
             }
