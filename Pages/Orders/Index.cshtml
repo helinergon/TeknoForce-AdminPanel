@@ -1,14 +1,43 @@
 ﻿@page
-@model TeknoForce.Pages.Orders.IndexModel
+@model TeknoForce.Pages.Admin.Orders.IndexModel
 @{
-    Layout = "_AdminLayout";
     ViewData["Title"] = "Siparişler";
+    Layout = "_AdminLayout";
 }
-<div class="card shadow-sm">
-    <div class="card-body">
-        <h3 class="mb-2">@ViewData["Title"]</h3>
-        <p class="text-muted">
-            Bu sayfa yakında aktif olacak.
-        </p>
-    </div>
-</div>
+
+<h3>Siparişler</h3>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Sipariş No</th>
+            <th>Tarih</th>
+            <th>Toplam Tutar</th>
+            <th>Durum</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+                <td>@order.OrderNumber</td>
+                <td>@order.CreatedDate.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@order.TotalAmount.ToString("N2") ₺</td>
+                <td>
+                    <span class="badge"
+                          style="background-color:@order.OrderStatus.ColorCode">
+                        @order.OrderStatus.Name
+                    </span>
+                </td>
+                <td>
+                    <a asp-page="Details"
+                       asp-route-id="@order.OrderId"
+                       class="btn btn-sm btn-primary">
+                        Detay
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

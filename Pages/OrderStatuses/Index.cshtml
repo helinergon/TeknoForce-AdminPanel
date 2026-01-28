@@ -1,14 +1,64 @@
 ﻿@page
-@model TeknoForce.Pages.OrderStatuses.IndexModel
+@model TeknoForce.Pages.Admin.OrderStatuses.IndexModel
 @{
-    Layout = "_AdminLayout";
     ViewData["Title"] = "Sipariş Durumları";
+    Layout = "_AdminLayout";
 }
-<div class="card shadow-sm">
-    <div class="card-body">
-        <h3 class="mb-2">@ViewData["Title"]</h3>
-        <p class="text-muted">
-            Bu sayfa yakında aktif olacak.
-        </p>
-    </div>
-</div>
+
+<h3>Sipariş Durumları</h3>
+
+<a asp-page="Create" class="btn btn-primary mb-3">
+    Yeni Sipariş Durumu Ekle
+</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Renk</th>
+            <th>Sıra</th>
+            <th>Durum</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var status in Model.OrderStatuses)
+        {
+            <tr>
+                <td>@status.Name</td>
+                <td>
+                    <span class="badge"
+                          style="background-color:@status.ColorCode">
+                        @status.ColorCode
+                    </span>
+                </td>
+                <td>@status.SortOrder</td>
+                <td>
+                    @(status.IsActive ? "Aktif" : "Pasif")
+                </td>
+                <td>
+                    <a asp-page="Edit"
+                       asp-route-id="@status.OrderStatusId"
+                       class="btn btn-sm btn-warning">
+                        Düzenle
+                    </a>
+
+                    <form method="post"
+                          asp-page-handler="ToggleStatus"
+                          class="d-inline">
+                        <input type="hidden"
+                               name="id"
+                               value="@status.OrderStatusId" />
+
+                        <button type="submit"
+                                class="btn btn-sm @(status.IsActive ? "btn-danger" : "btn-success")"
+                                onclick="return confirm('Durum değiştirilsin mi?');">
+                            @(status.IsActive ? "Pasif Yap" : "Aktif Yap")
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

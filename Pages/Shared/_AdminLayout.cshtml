@@ -1,8 +1,14 @@
 ﻿@{
     string currentPath = Context.Request.Path.Value?.ToLower() ?? "";
     Func<string, string> isActive = (path) =>
-    currentPath.StartsWith(path.ToLower()) ? "active" : "";
+        {
+            path = path.ToLower();
+            return currentPath == path || currentPath.StartsWith(path + "/")
+            ? "active"
+            : "";
+        };
     }
+
   
 
 @*
@@ -191,7 +197,7 @@
             <i class="fa-solid fa-cart-shopping me-2"></i>Siparişler
             </a>
 
-        <a href="/OrderStatuses" class="@isActive("/orderstatues")">
+        <a href="/OrderStatuses" class="@isActive("/orderstatuses")">
             <i class="fa-solid fa-flag me-2"></i>Sipariş Durumları
             </a>
 

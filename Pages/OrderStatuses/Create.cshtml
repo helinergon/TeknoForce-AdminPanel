@@ -1,0 +1,45 @@
+﻿@page
+@model TeknoForce.Pages.Admin.OrderStatuses.CreateModel
+@{
+    ViewData["Title"] = "Yeni Sipariş Durumları";
+    Layout = "_AdminLayout";
+}
+
+<h3>Yeni Sipariş Durumları</h3>
+
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">Ad</label>
+        <input asp-for="OrderStatus.Name" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Renk Kodu</label>
+        <input asp-for="OrderStatus.ColorCode"
+               class="form-control"
+               placeholder="#198754" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Sıra</label>
+        <input asp-for="OrderStatus.SortOrder"
+               type="number"
+               class="form-control" />
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="OrderStatus.IsActive"
+               class="form-check-input" />
+        <label class="form-check-label">
+            Aktif
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        Kaydet
+    </button>
+
+    <a asp-page="Index" class="btn btn-secondary">
+        İptal
+    </a>
+</form>
