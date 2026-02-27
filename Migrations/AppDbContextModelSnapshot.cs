@@ -58,6 +58,12 @@ namespace TeknoForce.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("FailedLoginCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LockoutEnd")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -69,6 +75,15 @@ namespace TeknoForce.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AdminUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FailedLoginCount = 0,
+                            Password = "AQAAAAIAAYagAAAAEFkodoXNFnTfE+8ceA/4KY7CG8LJDYnQQvx6e/NPesfppjIJThNqevosZn8It0eooQ==",
+                            Username = "teknoforce"
+                        });
                 });
 
             modelBuilder.Entity("TeknoForce.Data.Models.Brand", b =>
@@ -153,6 +168,42 @@ namespace TeknoForce.Migrations
                     b.HasIndex("BrandId");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("TeknoForce.Data.Models.Comment", b =>
+                {
+                    b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CommentId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("TeknoForce.Data.Models.ContactBranch", b =>
@@ -241,14 +292,12 @@ namespace TeknoForce.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SortOrder")
                         .HasColumnType("int");
 
                     b.Property<string>("label")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ContactPhoneId");
@@ -277,6 +326,7 @@ namespace TeknoForce.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalAmount")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UserId")
@@ -306,10 +356,8 @@ namespace TeknoForce.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<decimal>("UnitPrice")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("OrderItemId");
@@ -416,6 +464,38 @@ namespace TeknoForce.Migrations
                     b.ToTable("ProductImages");
                 });
 
+            modelBuilder.Entity("TeknoForce.Data.Models.ProductMedia", b =>
+                {
+                    b.Property<int>("ProductMediaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductMediaId"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsCover")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MediaType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductMediaId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductMedias");
+                });
+
             modelBuilder.Entity("TeknoForce.Data.Models.ProductSpecification", b =>
                 {
                     b.Property<int>("ProductSpecificationId")
@@ -453,6 +533,56 @@ namespace TeknoForce.Migrations
                     b.ToTable("ProductSpecifications");
                 });
 
+            modelBuilder.Entity("TeknoForce.Data.Models.Setting", b =>
+                {
+                    b.Property<int>("SettingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SettingId"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FacebookUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FooterText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InstagramUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LogoPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SiteTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("WhatsappNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SettingId");
+
+                    b.ToTable("Settings");
+                });
+
             modelBuilder.Entity("TeknoForce.Data.Models.Category", b =>
                 {
                     b.HasOne("TeknoForce.Data.Models.Brand", "Brand")
@@ -462,6 +592,17 @@ namespace TeknoForce.Migrations
                         .IsRequired();
 
                     b.Navigation("Brand");
+                });
+
+            modelBuilder.Entity("TeknoForce.Data.Models.Comment", b =>
+                {
+                    b.HasOne("TeknoForce.Data.Models.Product", "Product")
+                        .WithMany("Comments")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("TeknoForce.Data.Models.ContactPhone", b =>
@@ -535,6 +676,17 @@ namespace TeknoForce.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("TeknoForce.Data.Models.ProductMedia", b =>
+                {
+                    b.HasOne("TeknoForce.Data.Models.Product", "Product")
+                        .WithMany("Medias")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("TeknoForce.Data.Models.ProductSpecification", b =>
                 {
                     b.HasOne("TeknoForce.Data.Models.Product", "Product")
@@ -558,7 +710,11 @@ namespace TeknoForce.Migrations
 
             modelBuilder.Entity("TeknoForce.Data.Models.Product", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("Images");
+
+                    b.Navigation("Medias");
 
                     b.Navigation("Specification");
                 });

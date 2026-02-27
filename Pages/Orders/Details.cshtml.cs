@@ -8,7 +8,7 @@ using TeknoForce.Data.Models;
 
 namespace TeknoForce.Pages.Admin.Orders
 {
-    public class DetailsModel : PageModel
+    public class DetailsModel : AdminBasePageModel
     {
         public List<SelectListItem> StatusList { get; set; } = new();
 

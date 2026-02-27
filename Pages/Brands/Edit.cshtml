@@ -5,11 +5,11 @@
     ViewData["Title"] = "Marka Düzenle";
     Layout = "_AdminLayout";
 }
-
+<div class="admin-card">
 <h3>Marka Düzenle</h3>
-
+</div>
 <form method="post" enctype="multipart/form-data" class="mt-4">
-
+   <div class="admin-card">
     <input type="hidden" asp-for="Brand.BrandId" />
 
     <!-- Marka Adı (readonly) -->
@@ -53,5 +53,5 @@
     <a asp-page="./Index" class="btn btn-secondary ms-2">
         Geri
     </a>
-
+  </div>
 </form>

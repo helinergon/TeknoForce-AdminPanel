@@ -5,10 +5,12 @@
     ViewData["Title"] = "Yeni Sipariş Durumları";
     Layout = "_AdminLayout";
 }
-
+<div class="admin-card">
 <h3>Yeni Sipariş Durumları</h3>
+</div>
 
 <form method="post">
+   <div class="admin-card">
     <div class="mb-3">
         <label class="form-label">Ad</label>
         <input asp-for="OrderStatus.Name" class="form-control" />
@@ -43,4 +45,5 @@
     <a asp-page="Index" class="btn btn-secondary">
         İptal
     </a>
+   </div>
 </form>

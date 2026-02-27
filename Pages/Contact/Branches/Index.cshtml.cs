@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace TeknoForce.Pages.Admin.Contact.Branches
 {
-    public class IndexModel : PageModel
+    public class IndexModel : AdminBasePageModel
     {
         private readonly AppDbContext _context;
 

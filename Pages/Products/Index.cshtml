@@ -7,9 +7,10 @@
     Layout = "_AdminLayout";
 }
 
-<h3>Ürünler</h3>
-<form method="get" class="row g-2 mb-3">
 
+<form method="get" class="row g-2 mb-3">
+ <div class="admin-card">
+        <h3>Ürünler</h3>
     <div class="col-md-3">
         <select asp-for="BrandId"
                 asp-items="Model.BrandList"
@@ -17,7 +18,7 @@
             <option value="">Tüm Markalar</option>
         </select>
     </div>
-
+        <br />
     <div class="col-md-3">
         <select asp-for="CategoryId"
                 asp-items="Model.CategoryList"
@@ -25,7 +26,7 @@
             <option value="">Tüm Kategoriler</option>
         </select>
     </div>
-
+        <br />
     <div class="col-md-3">
         <select asp-for="IsActive" class="form-select">
             <option value="">Tümü</option>
@@ -33,7 +34,7 @@
             <option value="false">Pasif</option>
         </select>
     </div>
-
+        <br />
     <div class="col-md-3 d-flex gap-2">
         <button type="submit" class="btn btn-primary">
             Filtrele
@@ -43,7 +44,7 @@
             Temizle
         </a>
     </div>
-
+</div>
 </form>
 
 
@@ -52,7 +53,7 @@
         + Yeni Ürün
     </a>
 </div>
-
+<div class="admin-card">
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -60,11 +61,12 @@
             <th>Ürün</th>
             <th>Marka</th>
             <th>Kategori</th>
-            <th>Fiyat</th>
+            <th>Fiyat(KDV Hariç)</th>
             <th>Stok</th>
             <th>Durum</th>
             <th>Özet</th>
             <th>Görsel</th>
+            <th>Yorum</th>
             <th>İşlem</th>
         </tr>
     </thead>
@@ -83,8 +85,14 @@
 
                     <td>@product.Brand?.Name</td>
                     <td>@product.Category?.Name</td>
+                        <td>
+                            @product.Price.ToString("N2") TL + KDV
+                            <br />
+                            <small class="text-muted">
+                                (@product.PriceWithVat.ToString("N2") TL Dahil)
+                            </small>
+                        </td>
 
-                    <td>@product.Price ₺</td>
                     <td>@product.Stock</td>
 
                     <td>
@@ -119,6 +127,23 @@
                             <span class="text-muted">—</span>
                         }
                     </td>
+                    <td>
+                        @{
+                            var approvedCount = product.Comments.Count(c => c.IsApproved);
+                        }
+
+                        @if (approvedCount > 0)
+                        {
+                            <span class="badge bg-success">
+                                @approvedCount Yorum
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">0</span>
+                        }
+                    </td>
+
 
                     <td>
                         <a asp-page="./Edit"
@@ -154,3 +179,4 @@
 
 
 </table>  
+</div>

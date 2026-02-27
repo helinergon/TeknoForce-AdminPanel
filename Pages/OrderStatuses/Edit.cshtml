@@ -5,10 +5,12 @@
     ViewData["Title"] = "Sipariş Durumu Düzenle";
     Layout = "_AdminLayout";
 }
-
+<div class="admin-card">
 <h3>Sipariş Durumu Düzenle</h3>
+</div>
 
 <form method="post">
+    <div class="admin-card">
     <input type="hidden" asp-for="OrderStatus.OrderStatusId" />
 
     <div class="mb-3">
@@ -45,4 +47,5 @@
     <a asp-page="Index" class="btn btn-secondary">
         Geri Dön
     </a>
+    </div>
 </form>

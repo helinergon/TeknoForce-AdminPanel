@@ -7,13 +7,12 @@ namespace TeknoForce.Data.Models
     {
         [Key]
         public int ContactPhoneId { get; set; }
-        [Required]
-        public string PhoneNumber { get; set; }
-        public string label { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? label { get; set; }
         public bool IsActive { get; set; }
         public int SortOrder { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public int ContactBranchId { get; set; }
-        public ContactBranch ContactBranch { get; set; }
+        public ContactBranch? ContactBranch { get; set; }
     }
 }

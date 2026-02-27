@@ -15,13 +15,15 @@
 
     <style>
 
+
+
         body
         {
             height: 100vh;
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
             overflow: hidden;
-            background: linear-gradient(270deg, #0b1c2d, #112b46, #0b1c2d);
+            background: linear-gradient(135deg, #0b1c3f, #150c85);
             background-size: 600% 600%;
             animation: bgMove 14s ease infinite;
             display: flex;
@@ -45,41 +47,44 @@
 
         .bg-text {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-8deg);
-            font-size: 160px;
+            font-size: 220px;
             font-weight: 900;
-            letter-spacing: 16px;
-            color: rgba(255, 138, 0, 0.22);
-            user-select: none;
-            white-space: nowrap;
-            animation: pulse 6s ease-in-out infinite;
-            filter: blur(0.6px);
+            letter-spacing: 10px;
+            background: linear-gradient(90deg, #ff8a00, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 1;
+            text-transform: uppercase;
+            pointer-events: none;
+            animation: pulseText 5s ease-in-out infinite;
         }
-
-        @@keyframes pulse {
-            0%, 100% {
-                opacity: 0.55;
-                transform: translate(-50%, -50%) rotate(-8deg) scale(1);
+        @@keyframes pulseText {
+            0% {
+                transform: scale(1);
+                opacity: 0.15;
             }
 
             50% {
-                opacity: 0.9;
-                transform: translate(-50%, -50%) rotate(-8deg) scale(1.05);
+                transform: scale(1.05);
+                opacity: 0.18;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.15;
             }
         }
 
-        .login-card {
-            position: relative;
-            z-index: 2;
-            width: 420px;
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 42px;
-            box-shadow: 0 30px 70px rgba(0,0,0,0.4);
-            animation: cardIn 0.9s ease;
-        }
+  .login-card {
+    width: 420px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 24px;
+    padding: 45px 35px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+    transition: all 0.3s ease;
+}
+
 
         @@keyframes cardIn {
             from {
@@ -109,9 +114,16 @@
         }
 
         .form-control {
-            height: 48px;
-            border-radius: 14px;
+            border-radius: 12px;
+            padding: 12px 14px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.2s ease;
         }
+
+            .form-control:focus {
+                border-color: #ff8a00;
+                box-shadow: 0 0 0 3px rgba(255,138,0,0.15);
+            }
 
         .input-group-text {
             background: transparent;

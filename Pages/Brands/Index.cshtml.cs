@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TeknoForce.Pages.Brands
 {
-    public class IndexModel : PageModel
+    public class IndexModel : AdminBasePageModel
     {
         private readonly AppDbContext _context;
         

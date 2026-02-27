@@ -1,0 +1,44 @@
+﻿@page
+@model TeknoForce.Pages.Contact.Branches.EditModel
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Şube Düzenle";
+}
+<div class="admin-card">
+<h3>Şube Düzenle</h3>
+</div>
+<form method="post" class="card">
+    <div class="admin-card">
+        <input type="hidden" asp-for="Branch.ContactBranchId" />
+
+        <div class="mb-3">
+            <label class="form-label">Şube Adı</label>
+            <input asp-for="Branch.ContactName" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Adres</label>
+            <textarea asp-for="Branch.Address" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Google Maps Iframe</label>
+            <textarea asp-for="Branch.MapIframe" class="form-control"></textarea>
+        </div>
+
+        <div class="form-check mb-3">
+            <input asp-for="Branch.IsActive" class="form-check-input" />
+            <label class="form-check-label">Aktif</label>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            Güncelle
+        </button>
+
+        <a asp-page="Index" class="btn btn-secondary">
+            Geri
+        </a>
+
+    </div>
+</form>

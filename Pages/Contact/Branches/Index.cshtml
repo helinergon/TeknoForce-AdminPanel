@@ -4,7 +4,7 @@
     Layout = "_AdminLayout";
     ViewData["Title"] = "Şubeler";
 }
-
+<div class="admin-card">
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Şubeler</h3>
 
@@ -38,12 +38,12 @@
                         @(branch.IsActive ? "Aktif" : "Pasif")
                     </td>
                     <td>
-                        <a asp-page="/Admin/Contact/Phones/Index"
+                        <a asp-page="/Contact/Phones/Index"
                         asp-route-branchId="@branch.ContactBranchId"
                         class="btn btn-sm btn-primary me-1">
                         Telefonlar
                         </a>
-                        <a asp-page="Edit"
+                        <a asp-page="/Contact/Branches/Edit"
                            asp-route-id="@branch.ContactBranchId"
                            class="btn btn-sm btn-primary">
                             Düzenle
@@ -62,7 +62,4 @@
         }
     </tbody>
 </table>
-
-<a asp-page="/Admin/Contact/Branches/Index" class="btn btn-secondary mt-3">
-    İletişim Ayarlarına Dön
-</a>
+</div>

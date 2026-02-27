@@ -5,11 +5,12 @@
     ViewData["Title"] = "Yeni Kategori";
     Layout = "_AdminLayout";
 }
-
+<div class="admin-card">
 <h3>Yeni Kategori</h3>
+</div>
 <div asp-validation-summary="All" class="text-danger"></div>
 <form method="post" class="mt-4">
-
+   <div class="admin-card">
     <div class="mb-3">
         <label class="form-label">Marka</label>
         <select asp-for="Category.BrandId"
@@ -27,5 +28,5 @@
 
     <button type="submit" class="btn btn-primary">Kaydet</button>
     <a asp-page="./Index" class="btn btn-secondary ms-2">Geri</a>
-
+    </div>
 </form>

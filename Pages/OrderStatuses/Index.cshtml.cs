@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TeknoForce.Pages.Admin.OrderStatuses
 {
-    public class IndexModel : PageModel
+    public class IndexModel : AdminBasePageModel
     {
         private readonly AppDbContext _context;
 

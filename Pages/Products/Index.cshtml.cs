@@ -9,7 +9,7 @@ using TeknoForce.Data.Models;
 
 namespace TeknoForce.Pages.Products
 {
-    public class IndexModel : PageModel
+    public class IndexModel : AdminBasePageModel
     {
         private readonly AppDbContext _context;
 
@@ -37,7 +37,8 @@ namespace TeknoForce.Pages.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Category)
                 .Include(p => p.Specification)
-                .Include(p => p.Images);
+                .Include(p => p.Images)
+                .Include(p => p.Comments);
 
             if (BrandId.HasValue)
                 query = query.Where(p => p.BrandId == BrandId.Value);

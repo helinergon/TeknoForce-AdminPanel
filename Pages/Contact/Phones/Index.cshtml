@@ -1,4 +1,74 @@
 ﻿@page
-@model TeknoForce.Pages.Contact.Phones.IndexModel
+@model TeknoForce.Pages.Admin.Contact.Phones.IndexModel
 @{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Telefonlar";
 }
+<div class="admin-card">
+<h3>@Model.Branch.ContactName - Telefonlar</h3>
+<a asp-page="Create"
+   asp-route-branchId="@Model.BranchId"
+   class="btn btn-success">
+    Yeni Telefon
+</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Telefon</th>
+            <th>Etiket</th>
+            <th>Sıra</th>
+            <th>Durum</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Phones.Any())
+        {
+            foreach (var phone in Model.Phones)
+            {
+                <tr>
+
+                        <td>@phone.PhoneNumber</td>
+                        <td>@phone.label</td>
+                        <td>@phone.SortOrder</td>
+                        <td>@(phone.IsActive ? "Aktif" : "Pasif")</td>
+                        <td>
+                            <a asp-page="Edit"
+                               asp-route-id="@phone.ContactPhoneId"
+                               class="btn btn-sm btn-primary me-1">
+                                Düzenle
+                            </a>
+                            <form method="post"
+                                  asp-page-handler="Delete"
+                                  style="display:inline;">
+                                <input type="hidden" name="id"
+                                       value="@phone.ContactPhoneId" />
+                                <input type="hidden" name="branchId"
+                                       value="@Model.Branch.ContactBranchId" />
+                                <button type="submit"
+                                        class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Silmek istiyor musunuz?');">
+                                    Sil
+                                </button>
+                            </form>
+                        </td>
+                </tr>    
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center text-muted">
+                    Bu şubeye ait telefon yok.
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+                        <a asp-page="/Contact/Branches/Index"
+                           class="btn btn-secondary mt-3">
+                           Şubelere Dön
+                        </a>
+</div>

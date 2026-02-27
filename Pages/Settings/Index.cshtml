@@ -1,14 +1,47 @@
 ﻿@page
-@model TeknoForce.Pages.Settings.IndexModel
+@model TeknoForce.Pages.Admin.Settings.IndexModel
 @{
     Layout = "_AdminLayout";
-    ViewData["Title"] = "Ayarlar";
+    ViewData["Title"] = "Site Ayarları";
 }
-<div class="card shadow-sm">
-    <div class="card-body">
-        <h3 class="mb-2">@ViewData["Title"]</h3>
-        <p class="text-muted">
-            Bu sayfa yakında aktif olacak.
-        </p>
+
+
+
+<form method="post">
+<div class="admin-card">
+        <h3>Site Ayarları</h3>
+    <div class="mb-3">
+        <label>Site Başlığı</label>
+        <input asp-for="Setting.SiteTitle" class="form-control" />
     </div>
+
+    <div class="mb-3">
+        <label>Logo Yolu</label>
+        <input asp-for="Setting.LogoPath" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Telefon</label>
+        <input asp-for="Setting.Phone" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input asp-for="Setting.Email" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Adres</label>
+        <textarea asp-for="Setting.Address" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label>Footer Yazısı</label>
+        <input asp-for="Setting.FooterText" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        Kaydet
+    </button>
 </div>
+</form>

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace TeknoForce.Pages
 {
-    public class IndexModel : PageModel
+    public class IndexModel : AdminBasePageModel
     {
         public IActionResult OnGet()
         {

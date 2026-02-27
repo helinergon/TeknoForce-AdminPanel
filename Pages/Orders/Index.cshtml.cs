@@ -7,7 +7,7 @@ using TeknoForce.Data.Models;
 
 namespace TeknoForce.Pages.Admin.Orders
 {
-    public class IndexModel : PageModel
+    public class IndexModel : AdminBasePageModel
     {
         private readonly AppDbContext _context;
 

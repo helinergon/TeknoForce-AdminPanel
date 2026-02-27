@@ -5,10 +5,11 @@
     ViewData["Title"] = "Sipariş Detayı";
     Layout = "_AdminLayout";
 }
-
+<div class="admin-card">
 <h3>Sipariş Detayı</h3>
+</div>
 
-<div class="card mb-4">
+<div class="admin-card">
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">
@@ -48,7 +49,7 @@
     </div>
 </div>
 
-<div class="card">
+<div class="admin-card">
     <div class="card-header">
         Sipariş Ürünleri
     </div>
@@ -69,7 +70,7 @@
                         <td>@item.Product.Name</td>
                         <td>@item.UnitPrice.ToString("N2") ₺</td>
                         <td>@item.Quantity</td>
-                        <td>@item.TotalPrice.ToString("N2") ₺</td>
+                        <td>@((item.UnitPrice* item.Quantity).ToString("N2")) ₺</td>
                     </tr>
                 }
             </tbody>

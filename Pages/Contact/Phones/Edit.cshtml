@@ -1,0 +1,45 @@
+﻿@page
+@model TeknoForce.Pages.Contact.Phones.EditModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Telefon Düzenle";
+}
+<div class="admin-card">
+<h3>Telefon Düzenle</h3>
+</div>
+
+<form method="post">
+    <div class="admin-card">
+
+    <input type="hidden" asp-for="Phone.ContactPhoneId" />
+    <input type="hidden" asp-for="Phone.ContactBranchId" />
+
+    <div class="mb-3">
+        <label>Telefon</label>
+        <input asp-for="Phone.PhoneNumber" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Etiket</label>
+        <input asp-for="Phone.label" class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+        <label>Sıra</label>
+        <input asp-for="Phone.SortOrder"/>
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="Phone.IsActive" class="form-check-input" />
+        <label class="form-check-label">Aktif</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+    
+    <a asp-page="Index"
+       asp-route-branchId="@Model.Phone.ContactBranchId"
+       class="btn btn-secondary ms-2">
+       Geri
+    </a>
+    </div>
+</form>

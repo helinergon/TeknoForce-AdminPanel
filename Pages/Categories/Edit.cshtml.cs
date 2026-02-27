@@ -7,7 +7,7 @@ using TeknoForce.Data.Models;
 
 namespace TeknoForce.Pages.Categories
 {
-    public class EditModel : PageModel
+    public class EditModel : AdminBasePageModel
     {
         private readonly AppDbContext _context;
 

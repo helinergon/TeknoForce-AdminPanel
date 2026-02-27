@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;   
+using Microsoft.EntityFrameworkCore;
 using TeknoForce.Data.Models;
 
 namespace TeknoForce.Data
@@ -15,6 +16,18 @@ namespace TeknoForce.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            var hasher = new PasswordHasher<AdminUser>();
+
+            modelBuilder.Entity<AdminUser>().HasData(
+                new AdminUser
+                {
+                    Id = 1,
+                    Username = "teknoforce",
+                    Password = hasher.HashPassword(null!, "Tf@2026TEKNOFORCE."),
+                    FailedLoginCount = 0
+                }
+            );
 
             modelBuilder.Entity<Brand>().HasData(
                 new Brand
@@ -36,7 +49,7 @@ namespace TeknoForce.Data
 
 
             ); 
-            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Product>()
                  .HasOne(p => p.Category)
                  .WithMany()
@@ -60,6 +73,14 @@ namespace TeknoForce.Data
                 .WithMany(cb => cb.ContactPhones)
                 .HasForeignKey(cp => cp.ContactBranchId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Order>()
+                .Property(o => o.TotalAmount)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<OrderItem>()
+                .Property(o => o.UnitPrice)
+                .HasPrecision(18, 2);
         }
 
         public DbSet<Category> Categories { get; set; }
@@ -72,10 +93,12 @@ namespace TeknoForce.Data
         public  DbSet<ContactContent> ContactContents { get; set; }
         public DbSet<ContactBranch> ContactBranches { get; set; }
         public DbSet<ContactPhone> ContactPhones { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
-
+        public DbSet<Setting> Settings { get; set; }
+        public DbSet<ProductMedia> ProductMedias { get; set; }
     }
 
-    }
+}

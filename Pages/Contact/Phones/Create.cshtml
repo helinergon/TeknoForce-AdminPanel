@@ -1,4 +1,44 @@
 ﻿@page
-@model TeknoForce.Pages.Contact.Phones.CreateModel
+@model TeknoForce.Pages.Admin.Contact.Phones.CreateModel
 @{
+    Layout  = "_AdminLayout";
+    ViewData["Title"] = "Yeni Telefon Ekle";
 }
+<div class="admin-card">
+<h3>Telefon Ekle</h3>
+</div>
+
+<form method="post">
+    <div class="admin-card">
+        <input type="hidden" asp-for="BranchId" />
+
+    <div class="mb-3">
+        <label>Telefon Numarası</label>
+        <input asp-for="Phone.PhoneNumber" class="form-control"/>
+        <span asp-validation-for="Phone.PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Etiket (Merkez, Whatsapp vs.)</label>
+        <input asp-for="Phone.label" class="form-control"/>
+    </div>
+    <div class="mb-3">
+        <label>Sıra</label>
+        <input asp-for="Phone.SortOrder" class="form-control"/>
+    </div>
+    <div class="form-check mb-3">
+        <input asp-for="Phone.IsActive" class="form-check-input" />
+        <label class="form-check-label">Aktif</label>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        Kaydet
+    </button>
+
+    <a asp-page="/Contact/Branches/Index"
+       asp-route-branchId="@Model.BranchId"
+       class="btn btn-secondary ms-2">
+        Geri Dön
+    </a>
+
+    </div>
+</form>

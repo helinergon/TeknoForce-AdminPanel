@@ -1,0 +1,65 @@
+﻿@page "{id:int}"
+@model TeknoForce.Pages.Products.DetailsModel
+<div class="admin-card">
+<h2>@Model.Product?.Name</h2>
+
+    <p><strong>KDV Hariç:</strong> @Model.Product?.Price.ToString("N2") ₺</p>
+    <p><strong>KDV Dahil:</strong> @Model.Product?.PriceWithVat.ToString("N2") ₺</p>
+
+
+<p><strong>Stok:</strong> @Model.Product?.Stock</p>
+
+<hr />
+
+@if (Model.Product?.Specification != null)
+{
+    <h4>Teknik Özellikler</h4>
+
+    <p><strong>Maksimum Nozul:</strong> @Model.Product.Specification.MaxNozzle</p>
+    <p><strong>Motor Gücü (HP):</strong> @Model.Product.Specification.MotorPowerHP</p>
+    <p><strong>Ağırlık:</strong> @Model.Product.Specification.WeightKg kg</p>
+    <p><strong>Set İçeriği:</strong> @Model.Product.Specification.SetContent</p>
+    <p><strong>Kullanım Alanları:</strong> @Model.Product.Specification.UsageAreas</p>
+    <p><strong>Kullanılabilir Malzemeler:</strong> @Model.Product.Specification.UsableMaterials</p>
+}
+
+<hr />
+
+<h4>Yorumlar</h4>
+
+@if (Model.ApprovedComments.Any())
+{
+    foreach (var comment in Model.ApprovedComments)
+    {
+        <div class="border p-2 mb-2">
+            <strong>@comment.Name</strong>
+            <small>@comment.CreatedDate.ToShortDateString()</small>
+            <p>@comment.Content</p>
+        </div>
+    }
+}
+else
+{
+    <p>Henüz yorum yapılmamış.</p>
+}
+
+<hr />
+
+<h4>Yorum Yap</h4>
+
+<form method="post">
+    <div class="mb-2">
+        <input asp-for="NewComment.Name" class="form-control" placeholder="Adınız" />
+    </div>
+
+    <div class="mb-2">
+        <input asp-for="NewComment.Email" class="form-control" placeholder="Email" />
+    </div>
+
+    <div class="mb-2">
+        <textarea asp-for="NewComment.Content" class="form-control" placeholder="Yorumunuz"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Gönder</button>
+</form>
+</div>

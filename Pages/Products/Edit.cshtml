@@ -1,22 +1,27 @@
-﻿@*products klasöründeki edit.cshtml kodları:*@
-@page
+﻿@page
 @model TeknoForce.Pages.Products.EditModel
 @{
     ViewData["Title"] = "Ürün";
     Layout = "_AdminLayout";
 }
 
-<h3>Ürün</h3>
-<form method="post" asp-page="./Edit" enctype="multipart/form-data">
+<div class="admin-card">
+    <h3>Ürün</h3>
+</div>
+
+<form method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
 
-<!-- 1️⃣ GENEL BİLGİLER -->
-<div class="card mb-4">
+    <!-- 1️⃣ GENEL BİLGİLER -->
+    <div class="admin-card">
         <input type="hidden" asp-for="Product.ProductId" />
-    <div class="card-header">
-        <strong>Genel Bilgiler</strong>
-    </div>
-    <div class="card-body">
+
+        <div class="card-header">
+            <strong>Genel Bilgiler</strong>
+        </div>
+
+        <div class="card-body">
+
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label class="form-label">Marka</label>
@@ -25,7 +30,6 @@
                             asp-items="Model.BrandList">
                         <option value="">Marka seç</option>
                     </select>
-
                 </div>
 
                 <div class="col-md-6">
@@ -40,164 +44,160 @@
 
             <div class="mb-3">
                 <label class="form-label">Ürün Adı</label>
-                    <input asp-for="Product.Name"  type="text" class="form-control" placeholder="Ürün adı girin" />
+                <input asp-for="Product.Name" class="form-control" />
             </div>
 
             <div class="row mb-3">
                 <div class="col-md-4">
-                    <label class="form-label">Fiyat</label>
-                        <input asp-for="Product.Price" type="number" class="form-control" placeholder="₺" />
+                    <label class="form-label">
+                        Fiyat (KDV Hariç)
+                    </label>
+                    <input asp-for="Product.Price" type="number" class="form-control" />
+
                 </div>
 
                 <div class="col-md-4">
                     <label class="form-label">Stok</label>
-                        <input asp-for="Product.Stock" type="number" class="form-control" />
+                    <input asp-for="Product.Stock" type="number" class="form-control" />
                 </div>
 
                 <div class="col-md-4 d-flex align-items-end">
                     <div class="form-check form-switch">
-                            <input asp-for="Product.IsActive" class="form-check-input" type="checkbox">
+                        <input asp-for="Product.IsActive" class="form-check-input" type="checkbox">
                         <label class="form-check-label">Aktif</label>
                     </div>
                 </div>
             </div>
-
-            <div class="text-end">
-                <button type="submit" class="btn btn-success">
-                    Kaydet
-                </button>
-                <a asp-page="Index" class="btn btn-secondary">
-                    Geri Dön
-                </a>
-            </div>
+        </div>
     </div>
-</div>
 
-<!-- 2️⃣ TEKNİK ÖZELLİKLER -->
-<div class="card mb-4">
+    <br />
+
+    <!-- 2️⃣ TEKNİK ÖZELLİKLER -->
+    <div class="admin-card">
         <input type="hidden" asp-for="Specification.ProductId" />
-    <div class="card-header">
-        <strong>Teknik Özellikler</strong>
-    </div>
-    <div class="card-body">
 
-            <div class="row mb-3 align-items-center">
-                <div class="col-md-4 fw-semibold">
-                    MAXIMUM NOZUL (MEME)
-                </div>
-                <div class="col-md-8">
-                        <input asp-for="Specification.MaxNozzle" type="text" class="form-control" />
-                </div>
-            </div>
+        <div class="card-header">
+            <strong>Teknik Özellikler</strong>
+        </div>
 
-            <div class="row mb-3 align-items-center">
-                <div class="col-md-4 fw-semibold">
-                    MOTOR GÜCÜ (HP)
-                </div>
-                <div class="col-md-8">
-                        <input asp-for="Specification.MotorPowerHP" type="text" class="form-control" />
-                </div>
-            </div>
+        <div class="card-body">
 
-            <div class="row mb-3 align-items-center">
-                <div class="col-md-4 fw-semibold">
-                    AĞIRLIK (KG)
-                </div>
+            <div class="row mb-3">
+                <div class="col-md-4 fw-semibold">MAXIMUM NOZUL</div>
                 <div class="col-md-8">
-                        <input asp-for="Specification.WeightKg" type="number" class="form-control" />
+                    <input asp-for="Specification.MaxNozzle" class="form-control" />
                 </div>
             </div>
 
             <div class="row mb-3">
-                <div class="col-md-4 fw-semibold">
-                    SET İÇERİĞİ
-                </div>
+                <div class="col-md-4 fw-semibold">MOTOR GÜCÜ (HP)</div>
                 <div class="col-md-8">
-                        <textarea asp-for="Specification.SetContent" class="form-control" rows="2"></textarea>
+                    <input asp-for="Specification.MotorPowerHP" class="form-control" />
                 </div>
             </div>
 
             <div class="row mb-3">
-                <div class="col-md-4 fw-semibold">
-                    KULLANIM ALANLARI
-                </div>
+                <div class="col-md-4 fw-semibold">AĞIRLIK (KG)</div>
                 <div class="col-md-8">
-                        <textarea asp-for="Specification.UsageAreas" class="form-control" rows="2"></textarea>
+                    <input asp-for="Specification.WeightKg" type="number" class="form-control" />
                 </div>
             </div>
 
             <div class="row mb-3">
-                <div class="col-md-4 fw-semibold">
-                    KULLANILABİLİR MALZEMELER
-                </div>
+                <div class="col-md-4 fw-semibold">SET İÇERİĞİ</div>
                 <div class="col-md-8">
-                        <textarea asp-for="Specification.UsableMaterials" class="form-control" rows="2"></textarea>
+                    <textarea asp-for="Specification.SetContent" class="form-control"></textarea>
                 </div>
             </div>
-    </div>
-</div>
 
-<!-- 3️⃣ GÖRSELLER -->
-<div class="card mb-4">
-    <div class="card-header">
-        <strong>Görseller</strong>
-    </div>
-    <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-4 fw-semibold">KULLANIM ALANLARI</div>
+                <div class="col-md-8">
+                    <textarea asp-for="Specification.UsageAreas" class="form-control"></textarea>
+                </div>
+            </div>
 
-            <!-- Görsel Yükleme -->
+            <div class="row mb-3">
+                <div class="col-md-4 fw-semibold">KULLANILABİLİR MALZEMELER</div>
+                <div class="col-md-8">
+                    <textarea asp-for="Specification.UsableMaterials" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <!-- 3️⃣ MEDYA (GÖRSEL + VİDEO) -->
+    <div class="admin-card">
+        <div class="card-header">
+            <strong>Medya (Görsel + Video)</strong>
+        </div>
+
+        <div class="card-body">
+
             <div class="mb-3">
-                <label class="form-label fw-semibold">Görsel Yükle</label>
-                <input name="UploadedImages" type="file" class="form-control" multiple />
+                <label class="form-label fw-semibold">Medya Yükle</label>
+                <input asp-for="MediaFiles"
+                       type="file"
+                       multiple
+                       class="form-control"
+                       accept="image/*,video/mp4" />
                 <small class="text-muted">
-                    Birden fazla görsel seçebilirsiniz. Kapak görseli sonradan seçilecektir.
+                    Görsel ve mp4 video yükleyebilirsiniz.
                 </small>
             </div>
 
             <hr />
 
-            <!-- Mevcut Görseller -->
-            @if (Model.ProductImages.Any())
+            @if (Model.ProductMedias.Any())
             {
                 <div class="row g-3">
-                    @foreach (var image in Model.ProductImages)
+                    @foreach (var media in Model.ProductMedias)
                     {
                         <div class="col-md-3">
                             <div class="border rounded p-2 text-center">
 
-                                <img src="@image.ImagePath"
-                                     class="img-fluid mb-2"
-                                     style="max-height:150px; object-fit:contain;" />
+                                @if (media.MediaType == "Image")
+                                {
+                                    <img src="@media.FilePath"
+                                         class="img-fluid mb-2"
+                                         style="max-height:150px; object-fit:contain;" />
+                                }
+                                else
+                                {
+                                    <video class="w-100 mb-2" controls>
+                                        <source src="@media.FilePath" type="video/mp4" />
+                                    </video>
+                                }
 
-                                @if (image.IsCover)
+                                @if (media.IsCover)
                                 {
                                     <span class="badge bg-success">Kapak</span>
                                 }
                                 else
                                 {
-                                    <span class="badge bg-secondary">Görsel</span>
+                                    <span class="badge bg-secondary">@media.MediaType</span>
                                 }
-                                @if (!image.IsCover)
-                                {
-                                    <input type="hidden" name="imageId" value="@image.ProductImageId" />
-                                    <input type="hidden" name="productId" value="@Model.Product.ProductId" />
+
+                                <div class="mt-2">
+                                    @if (!media.IsCover)
+                                    {
+                                        <button type="submit"
+                                                formaction="?handler=SetCover&mediaId=@media.ProductMediaId&productId=@Model.Product.ProductId"
+                                                class="btn btn-sm btn-outline-primary w-100">
+                                            Kapak Yap
+                                        </button>
+                                    }
 
                                     <button type="submit"
-                                            formaction="?handler=SetCover"
-                                            class="btn btn-sm btn-outline-primary w-100 mt-2">
-                                        Kapak Yap
-                                    </button>
-
-                                    <button type="submit"
-                                            formaction="?handler=DeleteImage"
+                                            formaction="?handler=DeleteMedia&mediaId=@media.ProductMediaId&productId=@Model.Product.ProductId"
                                             class="btn btn-sm btn-outline-danger w-100 mt-1"
-                                            onclick="return confirm('Bu görsel silinsin mi?');">
+                                            onclick="return confirm('Silinsin mi?');">
                                         Sil
                                     </button>
-
-                                    <input type="hidden" name="imageId" value="@image.ProductImageId" />
-                                    <input type="hidden" name="productId" value="@Model.Product.ProductId" />
-
-                                }
+                                </div>
 
                             </div>
                         </div>
@@ -207,11 +207,21 @@
             else
             {
                 <div class="text-muted">
-                    Bu ürüne ait görsel bulunmamaktadır.
+                    Bu ürüne ait medya bulunmamaktadır.
                 </div>
             }
-
         </div>
-    
-</div>
+    </div>
+
+    <br />
+
+    <div class="text-end">
+        <button type="submit" class="btn btn-success">
+            Kaydet
+        </button>
+        <a asp-page="Index" class="btn btn-secondary">
+            Geri Dön
+        </a>
+    </div>
+
 </form>

@@ -27,6 +27,11 @@ namespace TeknoForce.Data.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
+        [NotMapped]
+        public decimal PriceWithVat => Price * 1.20m;
+
+
+
         public int Stock { get; set; }
 
         public bool IsActive { get; set; }
@@ -36,5 +41,11 @@ namespace TeknoForce.Data.Models
         // NAVIGATION
         public ProductSpecification? Specification { get; set; }
         public ICollection<ProductImage> Images { get; set; } = new List<ProductImage>();
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
+        public ICollection<ProductMedia> Medias { get; set; } = new List<ProductMedia>();
+
+
+
     }
 }
