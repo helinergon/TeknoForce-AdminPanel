@@ -70,6 +70,45 @@
         </div>
     </div>
 </section>
+
+<section class="support-banner-section mb-50">
+    <div class="container">
+        <div class="support__banner">
+            <div class="support__banner-badge">7/24 CANLI TEKNİK DESTEK</div>
+
+            <div class="row align-items-center">
+                <div class="col-lg-3 text-center d-none d-lg-block">
+                    <div class="banner__icon-circle">
+                        <i class="bi bi-camera-video"></i>
+                        <div class="pulse"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 text-center text-lg-start">
+                    <h2 class="banner__title"><strong>Teknik Destek Her An Yanınızda!</strong></h2>
+                    <p class="banner__text">
+                        Cihazınızla ilgili bir sorun mu var? Beklemenize gerek yok.
+                        <strong>Görüntülü konuşma</strong> ile anında çözüm üretiyoruz veya sizi
+                        <strong>mağazamızda</strong> ağırlayarak profesyonel servis desteği sağlıyoruz.
+                    </p>
+                    <div class="banner__features">
+                        <span><i class="bi bi-check-circle-fill"></i> Hızlı Çözüm</span>
+                        <span><i class="bi bi-check-circle-fill"></i> Uzman Kadro</span>
+                        <span><i class="bi bi-check-circle-fill"></i> Ücretsiz Ön Görüşme</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 text-center">
+                    <a href="https://wa.me/905345060437" target="_blank" class="banner__cta">
+                        <i class="bi bi-whatsapp me-2"></i> HEMEN BAĞLANIN
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 <section class="section--padding bg-light-gray">
     <div class="container">
         <div class="section__heading text-center mb-40">
@@ -121,7 +160,7 @@
 <section class="section--padding">
     <div class="container">
         <div class="section__heading text-center mb-40">
-            <h2>Yeni Ürünler</h2>
+            <h2 class="section__heading--title custom-title">Yeni Ürünler</h2>
         </div>
 
       
@@ -150,7 +189,7 @@
                                  class="img-fluid mb-3 mx-auto d-block"
                                  style="height:220px; object-fit:contain;" />
 
-                            <h6>@product.Name</h6>
+                            <h5>@product.Name</h5>
 
                             <p class="text-muted small">
                                 @product.Brand?.Name
@@ -187,74 +226,78 @@
     </div>
 </section>
 
-                                 <section class="section--padding bg-light">
+ <section class="section--padding">
     
+   <div class="container">
         <div class="section__heading text-center mb-40">
-            <h2>En Çok Satanlar</h2>
+            <h2 class="section__heading--title custom-title">En Çok Satanlar</h2>
         </div>
 
         <div class="row">
-            <div class="row">
-                @foreach (var product in Model.BestSellers)
+            <div class="row justify-content-center">
+                @{
+                    // BURAYA DİKKAT: Göstermek istediğin 4 ürünün ProductId numarasını buraya yaz
+                    // Örnek: { 15, 22, 45, 60 } gibi.
+                    var sabitUrunId = new List<int> { 3, 48, 35, 41 };
+
+                    // Bu kod sadece senin seçtiğin ID'leri listeden ayıklar ve ilk 4'ünü alır
+                    var sabitVitrin = Model.BestSellers
+                    .Where(x => sabitUrunId.Contains(x.ProductId))
+                    .Take(4)
+                    .ToList();
+                }
+
+                @foreach (var product in sabitVitrin)
                 {
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-
-                        <div class="product__card text-center p-3 shadow-sm border-radius-5 h-100">
+                        <div class="product__card text-center p-3 shadow-sm border-radius-5 h-100 d-flex flex-column">
 
                             @{
-                                var cover = product.Medias?
-                                .FirstOrDefault(x => x.IsCover && x.MediaType == "Image");
-
+                                var cover = product.Medias?.FirstOrDefault(x => x.IsCover && x.MediaType == "Image");
                                 var imagePath = cover != null
                                 ? Url.Content("~" + cover.FilePath)
                                 : Url.Content("~/images/no-image.png");
+
+                                // WhatsApp mesajını ürün adına göre özelleştiriyoruz
+                                var urunMesajı = $"Merhaba, web sitenizdeki *{product.Name}* ürünü hakkında bilgi almak istiyorum.";
+                                var encodedMessage = Uri.EscapeDataString(urunMesajı);
                             }
 
-                            <a asp-page="/Shop/Details"
-                               asp-route-id="@product.ProductId"
-                               class="text-decoration-none text-dark">
+                            <a asp-page="/Shop/Details" asp-route-id="@product.ProductId" class="text-decoration-none text-dark flex-grow-1">
+                                <div class="card-img-box mb-3" style="background: #fff; border-radius: 12px; padding: 15px;">
+                                    <img src="@imagePath"
+                                         class="img-fluid mx-auto d-block"
+                                         style="height:200px; object-fit:contain;" />
+                                </div>
 
-                                <img src="@imagePath"
-                                     class="img-fluid mb-3 mx-auto d-block"
-                                     style="height:200px; object-fit:contain;" />
+                                <h5 class="fw-bold">@product.Name</h5>
 
-                                <h6>@product.Name</h6>
-
-                                <p class="text-muted small">
+                                <p class="text-muted small mb-2">
                                     @product.Brand?.Name
                                 </p>
 
-                                <strong class="d-block">
+                                <strong class="d-block fs-5" style="color: #1a237e;">
                                     @product.Price.ToString("N0") ₺
                                 </strong>
 
-                                <small class="text-muted">
+                                <small class="text-muted d-block mb-3">
                                     KDV Dahil: @product.PriceWithVat.ToString("N0") ₺
                                 </small>
-
-                           </a>
-                           <br />
-
-
-                            @{
-                                var message = ($"Merhaba web sitenizdeki en çok satan ürünler hakkında bilgi almak istiyorum");
-                                var encodedMessage = Uri.EscapeDataString(message);
-                            }
-
-                            <a href="https://wa.me/905421020523?text=@encodedMessage"
-                               target="_blank"
-                               class="btn btn-success">
-                                WhatsApp ile Sor - Sipariş Ver
                             </a>
 
-                            
-
+                            <div class="mt-auto">
+                                <a href="https://wa.me/905421020523?text=@encodedMessage"
+                                   target="_blank"
+                                   class="btn btn-success w-100 py-2"
+                                   style="border-radius: 8px; font-weight: 600;">
+                                    <i class="bi bi-whatsapp me-2"></i> WhatsApp ile Sor
+                                </a>
+                            </div>
                         </div>
-
                     </div>
                 }
             </div>
         </div>
-    
+    </div>
 </section>
 

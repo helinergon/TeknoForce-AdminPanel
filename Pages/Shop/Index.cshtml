@@ -7,7 +7,7 @@
 
 
 <section class="section--padding">
-    <div class="container">
+    <div class="product__card">
         <div class="section__heading text-center mb-40">
             <h2 class="section__heading--title">Ürünler</h2>
         </div>
@@ -16,39 +16,52 @@
 
             <!-- SOL FİLTRE -->
             <div class="col-lg-3">
+                <div class="d-lg-none mb-3">
+                    <button class="btn btn-outline-dark w-100 py-3 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#mobileFilter">
+                        <i class="bi bi-filter-left me-2"></i> Filtrele ve Ara
+                    </button>
+                </div>
 
-                <div class="shop__sidebar shadow-sm p-4 border-radius-5">
+                <div class="collapse d-lg-block" id="mobileFilter">
+                </div>
+                <div class="filter__sidebar">
 
-                    <div class="mb-4">
-                        <h5 class="mb-3">Kategoriler</h5>
-
-                        @foreach (var category in Model.Categories)
-                        {
-                            <div class="mb-2">
-                                <a class="d-block text-decoration-none"
+                    <div class="filter__group">
+                        <h5 class="filter__title">Kategoriler</h5>
+                        <div class="filter__list">
+                            @foreach (var category in Model.Categories)
+                            {
+                                <a class="filter__item @(ViewContext.HttpContext.Request.Query["categoryId"] == category.CategoryId.ToString() ? "active" : "")"
                                    asp-page="/Shop/Index"
                                    asp-route-categoryId="@category.CategoryId">
-                                    @category.Name
+                                    <span class="filter__name">@category.Name</span>
+                                    <i class="bi bi-chevron-right"></i>
                                 </a>
-                            </div>
-                        }
+
+                            }
+
+                        </div>
+
                     </div>
 
-                    <hr />
+                    <div class="filter__divider"></div>
 
-                    <div class="mt-4">
-                        <h5 class="mb-3">Markalar</h5>
-
-                        @foreach (var brand in Model.Brands)
-                        {
-                            <div class="mb-2">
-                                <a class="d-block text-decoration-none"
+                    <div class="filter__group">
+                        <h5 class="filter__title">Markalar</h5>
+                        <div class="filter__list">
+                            @foreach (var brand in Model.Brands)
+                            {
+                                <a class="filter__item @(ViewContext.HttpContext.Request.Query["brandId"] == brand.BrandId.ToString() ? "active" : "")"
                                    asp-page="/Shop/Index"
                                    asp-route-brandId="@brand.BrandId">
-                                    @brand.Name
+                                    <span class="filter__name">@brand.Name</span>
+                                    <i class="bi bi-patch-check"></i>
                                 </a>
-                            </div>
-                        }
+
+                            }
+
+                        </div>
+
                     </div>
 
                 </div>
@@ -101,6 +114,180 @@
         </div>
     </div>
     <style>
+        
+
+        /* --- MOBİL AYARLARI (Ekran 992px'den küçükse) --- */
+        @@media (max-width: 991px) {
+            .filter__sidebar {
+                position: static !important; /* Mobilde yapışkan olmasın */
+                margin-bottom: 20px;
+                display: none; /* İstersen mobilde tamamen gizleyip bir butonla açtırabiliriz */
+            }
+            /* Mobilde yazıları biraz küçültelim ki ekranı kaplamasın */
+            .filter__name {
+                font-size: 1rem;
+            }
+        }
+
+        /* --- MASAÜSTÜ AYARLARI (Ekran 992px'den büyükse) --- */
+        @@media (min-width: 992px) {
+            .filter__sidebar {
+                position: -webkit-sticky !important;
+                position: sticky !important;
+                top: 100px;
+                display: block !important;
+            }
+        }
+
+
+        /* 1. Dinamik Takip Eden (Sticky) Sol Kolon */
+        .col-lg-3 {
+            position: -webkit-sticky !important; /* Safari desteği */
+            position: sticky !important;
+            top: 20px; /* Navbar'ın hemen altına yapışması için (Gerekirse 80px-100px yapabilirsin) */
+            z-index: 100;
+            height: fit-content; /* Kendi boyu kadar yer kaplamalı */
+            align-self: flex-start; /* Üstten başlamalı */
+            transition: top 0.3s ease;
+        }
+
+        /* 2. Filtre Sidebar Tasarımı */
+        .filter__sidebar {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        /* 3. Başlıklar ve Yazı Boyutları (Büyük ve Net) */
+        .filter__title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #1a237e;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            border-left: 5px solid #ff7a00;
+        }
+
+        .filter__name {
+            font-weight: 600;
+            font-size: 1.1rem; /* Yazıları okunaklı seviyeye çektik */
+            color: #333;
+        }
+
+        /* 4. Filtre Butonları */
+        .filter__item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            background: #ffffff;
+            border-radius: 12px;
+            color: #444 !important;
+            text-decoration: none !important;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+            /* Hover ve Aktif Durumu */
+            .filter__item:hover {
+                background: #ffffff;
+                transform: translateX(5px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+                border-color: #ff7a00;
+            }
+
+            .filter__item.active {
+                background: #ff7a00 !important; /* Seçili olduğunda TeknoForce turuncusu */
+                color: #ffffff !important;
+                box-shadow: 0 8px 20px rgba(255, 122, 0, 0.3);
+            }
+
+                .filter__item.active .filter__name,
+                .filter__item.active i {
+                    color: #ffffff !important;
+                }
+
+        /* Ayırıcı Çizgi */
+        .filter__divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
+            margin: 25px 0;
+        }
+
+        /* Ürün Kartı İyileştirmeleri */
+        .product__card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            transition: all .35s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,.04);
+            height: 100%;
+        }
+
+            .product__card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 45px rgba(255,122,0,.15);
+            }
+
+        /* Başlık ve Diğer Sabitler */
+        .section__heading--title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a237e;
+            position: relative;
+        }
+
+            .section__heading--title:after {
+                content: "";
+                display: block;
+                width: 60px;
+                height: 4px;
+                background: #ff7a00;
+                margin: 15px auto 0;
+                border-radius: 5px;
+            }
+    
+
+        
+
+        
+
+            
+
+            /* Aktif Seçili Filtre */
+            .filter__item.active {
+                background:  #ff7a00 !important;
+                color: #ffffff !important;
+                box-shadow: 0 8px 20px rgba(26, 35, 126, 0.2);
+            }
+
+                .filter__item.active i {
+                    color: #1a237e;
+                }
+
+            
+
+        /* Ayırıcı Çizgi */
+        .filter__divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
+            margin: 30px 0;
+        }
+        /* 3. Yazı Boyutlarını Büyütme */
+        .filter__name {
+            font-weight: 600;
+            font-size: 1.15rem; /* Yazıları belirgin şekilde büyüttük (Eskisi 0.95'ti) */
+            color: #333;
+        }
+
+        
+
+
         .whatsapp-btn {
             background: #25D366;
             color: white;

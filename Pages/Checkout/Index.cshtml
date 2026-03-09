@@ -4,123 +4,182 @@
     Layout = "_CheckoutLayout";
 }
 
-<div class="row">
-    <div class="col-lg-7">
+<div class="checkout-wrapper py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-8">
+                <div class="checkout-card p-4 rounded-4 shadow-sm bg-white mb-4">
+                    <h4 class="fw-bold mb-4 border-bottom pb-3">
+                        <i class="bi bi-truck me-2 text-primary"></i>Teslimat Bilgileri
+                    </h4>
 
-        <h3>Teslimat Bilgileri</h3>
+                    <form method="post" id="checkoutForm">
+                        @Html.AntiForgeryToken()
 
-        <form method="post">
-            @Html.AntiForgeryToken()
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="form-label small fw-bold">Ad Soyad</label>
+                                <input asp-for="FullName" class="form-control rounded-3" placeholder="Örn: Ahmet Y****" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Telefon</label>
+                                <input asp-for="Phone" class="form-control rounded-3" placeholder="05XX XXX XX XX" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">E-posta</label>
+                                <input asp-for="Email" class="form-control rounded-3" placeholder="ornek@mail.com" required />
+                            </div>
 
-            <input asp-for="FullName" class="form-control mb-3" placeholder="Ad Soyad" required />
-            <input asp-for="Phone" class="form-control mb-3" placeholder="Telefon" required />
-            <input asp-for="Email" class="form-control mb-3" placeholder="Email" required />
+                            <div class="col-md-12 my-3">
+                                <label class="form-label d-block small fw-bold">Adres Tipi</label>
+                                <div class="d-flex gap-4">
+                                    <div class="form-check custom-radio">
+                                        <input class="form-check-input" type="radio" name="AddressType" id="addrHome" value="Home" checked onclick="toggleCompany(false)">
+                                        <label class="form-check-label" for="addrHome">🏠 Ev Adresi</label>
+                                    </div>
+                                    <div class="form-check custom-radio">
+                                        <input class="form-check-input" type="radio" name="AddressType" id="addrWork" value="Work" onclick="toggleCompany(true)">
+                                        <label class="form-check-label" for="addrWork">🏢 İş Adresi</label>
+                                    </div>
+                                </div>
+                            </div>
 
-            <div class="mb-3">
-                <label class="form-label"><strong>Adres Tipi</strong></label>
+                            <div id="companyField" class="col-md-12" style="display:none;">
+                                <label class="form-label small fw-bold">Firma / İş Yeri Adı</label>
+                                <input asp-for="CompanyName" class="form-control rounded-3" placeholder="Şirket unvanı giriniz" />
+                            </div>
 
-                <div class="form-check">
-                    <input class="form-check-input"
-                           type="radio"
-                           name="AddressType"
-                           value="Home"
-                           checked
-                           onclick="toggleCompany(false)">
-                    <label class="form-check-label">Ev</label>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">İl</label>
+                                <input asp-for="City" class="form-control rounded-3" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">İlçe</label>
+                                <input asp-for="District" class="form-control rounded-3" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Mahalle</label>
+                                <input asp-for="Neighborhood" class="form-control rounded-3" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Cadde / Sokak</label>
+                                <input asp-for="Street" class="form-control rounded-3" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Bina No</label>
+                                <input asp-for="BuildingNo" class="form-control rounded-3" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Daire No</label>
+                                <input asp-for="ApartmentNo" class="form-control rounded-3" />
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label small fw-bold">Adres Tarifi / Not</label>
+                                <textarea asp-for="AddressNote" class="form-control rounded-3" rows="2" placeholder="Kurye için not bırakın..."></textarea>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
-                <div class="form-check">
-                    <input class="form-check-input"
-                           type="radio"
-                           name="AddressType"
-                           value="Work"
-                           onclick="toggleCompany(true)">
-                    <label class="form-check-label">İş</label>
+                <div class="checkout-card p-4 rounded-4 shadow-sm bg-white border-top border-primary border-4">
+                    <h4 class="fw-bold mb-4"><i class="bi bi-credit-card me-2 text-primary"></i>Ödeme Yöntemi</h4>
+
+                    <div class="payment-option p-3 border rounded-3 mb-3 bg-light border-primary">
+                        <div class="form-check d-flex align-items-center">
+                            <input class="form-check-input me-3" type="radio" checked disabled>
+                            <label class="form-check-label fw-bold">Havale / EFT ile Ödeme</label>
+                            <span class="badge bg-primary ms-auto">Aktif</span>
+                        </div>
+                    </div>
+
+                    <div class="payment-option p-3 border rounded-3 opacity-50 bg-light">
+                        <div class="form-check d-flex align-items-center">
+                            <input class="form-check-input me-3" type="radio" disabled>
+                            <label class="form-check-label text-muted fw-bold">Online Kredi Kartı</label>
+                            <span class="badge bg-secondary ms-auto">Yakında</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div id="companyField" style="display:none;">
-                <input asp-for="CompanyName"
-                       class="form-control mb-3"
-                       placeholder="Firma / İş Yeri Adı" />
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <input asp-for="City" class="form-control mb-3" placeholder="İl" required />
+            <div class="col-lg-4">
+                <div class="sticky-top" style="top: 100px;">
+                    <div class="summary-card p-4 rounded-4 shadow-sm bg-white">
+                        <h5 class="fw-bold mb-4 border-bottom pb-3">Sipariş Özeti</h5>
+
+                        <div class="cart-items-mini mb-4" style="max-height: 250px; overflow-y: auto;">
+                            @foreach (var item in Model.Cart)
+                            {
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="small">
+                                        <span class="fw-bold text-dark d-block">@item.ProductName</span>
+                                        <span class="text-muted">Adet: @item.Quantity</span>
+                                    </div>
+                                    <span class="fw-bold text-primary">@item.TotalPrice.ToString("N0") ₺</span>
+                                </div>
+                            }
+                        </div>
+
+                        <hr class="dashed">
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Ara Toplam</span>
+                            <span class="fw-bold">@Model.Total.ToString("N0") ₺</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span class="text-muted">Kargo</span>
+                            <span class="text-success fw-bold">Ücretsiz</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-4 mt-2">
+                            <span class="fs-5 fw-bold text-dark">Toplam</span>
+                            <span class="fs-4 fw-bold text-primary">@Model.Total.ToString("N0") ₺</span>
+                        </div>
+
+                        <button type="submit" form="checkoutForm" class="btn btn-primary btn-lg w-100 py-3 rounded-pill fw-bold shadow-hover">
+                            SİPARİŞİ ONAYLA <i class="bi bi-check-circle-fill ms-2"></i>
+                        </button>
+
+                        <div class="mt-4 p-3 bg-light rounded-3 small text-muted text-center border">
+                            <i class="bi bi-shield-lock me-1"></i> %100 Güvenli Ödeme Altyapısı
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <input asp-for="District" class="form-control mb-3" placeholder="İlçe" required />
-                </div>
             </div>
-
-            <input asp-for="Neighborhood" class="form-control mb-3" placeholder="Mahalle" required />
-
-            <input asp-for="Street" class="form-control mb-3" placeholder="Cadde / Sokak" required />
-
-            <div class="row">
-                <div class="col-md-6">
-                    <input asp-for="BuildingNo" class="form-control mb-3" placeholder="Bina No" required />
-                </div>
-                <div class="col-md-6">
-                    <input asp-for="ApartmentNo" class="form-control mb-3" placeholder="Daire No" />
-                </div>
-            </div>
-
-<textarea asp-for="AddressNote"
-          class="form-control mb-3"
-          placeholder="Adres Tarifi / Not (Opsiyonel)">
-</textarea>
-
-            <button class="btn btn-primary w-100">
-                Siparişi Oluştur
-            </button>
-        </form>
-    </div>
-
-    <div class="col-lg-5">
-
-        <h3>Sipariş Özeti</h3>
-
-        @foreach (var item in Model.Cart)
-        {
-            <div class="d-flex justify-content-between mb-2">
-                <span>@item.ProductName x @item.Quantity</span>
-                <strong>@item.TotalPrice.ToString("N0") ₺</strong>
-            </div>
-        }
-
-        <hr />
-
-        <h4 class="text-end">
-            Toplam: @Model.Total.ToString("N0") ₺
-        </h4>
-
-    </div>
-
-    <h5 class="mt-4">Ödeme Yöntemi</h5>
-
-    <div class="form-check mb-2">
-        <input class="form-check-input"
-               type="radio"
-               checked
-               disabled>
-        <label class="form-check-label">
-            Havale / EFT
-        </label>
-    </div>
-
-    <div class="form-check">
-        <input class="form-check-input"
-               type="radio"
-               disabled>
-        <label class="form-check-label text-muted">
-            💳 Online Kart ile Ödeme (Yakında)
-        </label>
-        <div class="alert alert-light border mt-3 small">
-            Online kart ile ödeme altyapımız çok yakında aktif olacaktır.
         </div>
     </div>
 </div>
+
+<style>
+    .checkout-wrapper {
+        background-color: #f8f9fa;
+    }
+
+    .checkout-card, .summary-card {
+        border: none;
+    }
+
+    .form-control:focus {
+        border-color: #ff7a00;
+        box-shadow: 0 0 0 0.25rem rgba(255, 122, 0, 0.15);
+    }
+
+    .custom-radio .form-check-input:checked {
+        background-color: #ff7a00;
+        border-color: #ff7a00;
+    }
+
+    .dashed {
+        border-top: 1px dashed #dee2e6;
+        opacity: 1;
+    }
+
+    .shadow-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(26, 35, 126, 0.15);
+        transition: 0.3s;
+    }
+</style>
 
 <script>
     function toggleCompany(show) {

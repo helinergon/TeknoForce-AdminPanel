@@ -56,42 +56,15 @@ namespace TeknoForce.Pages
                 .Take(4)
                 .ToList();
 
-            if (bestSellerData.Any())
-            {
-                BestSellers = bestSellerData
-                    .Join(_context.Products
-                        .Include(p => p.Brand)
-                        .Include(p => p.Medias),
-                        grouped => grouped.ProductId,
-                        product => product.ProductId,
-                        (grouped, product) => product)
-                    .Where(p => p.IsActive)
-                    .ToList();
-            }
-            else
-            {
-                var firstTwo = _context.Products
-                    .Include(p => p.Brand)
-                    .Include(p => p.Medias)
-                    .Where(p => p.IsActive)
-                    .OrderBy(p => p.CreatedDate)      // ilk eklenen
-                    .Take(2)
-                    .ToList();
+            // Göstermek istediğin o 4 özel ürünün ID'leri
+            var vitrinIds = new List<int> { 3, 48, 35, 41 };
 
-                var lastTwo = _context.Products
-                    .Include(p => p.Brand)
-                    .Include(p => p.Medias)
-                    .Where(p => p.IsActive)
-                    .OrderByDescending(p => p.CreatedDate)  // son eklenen
-                    .Take(2)
-                    .ToList();
-
-                BestSellers = firstTwo
-                    .Concat(lastTwo)
-                    .Distinct()
-                    .Take(4)
-                    .ToList();
-            }
+            // Direkt bu ID'lere sahip ürünleri veritabanından çekiyoruz
+            BestSellers = _context.Products
+                .Include(p => p.Brand)
+                .Include(p => p.Medias)
+                .Where(p => vitrinIds.Contains(p.ProductId) && p.IsActive)
+                .ToList();
 
             Branches = _context.ContactBranches
               .Include(b => b.ContactPhones)

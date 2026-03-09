@@ -1,196 +1,141 @@
 ﻿@page "{id:int}"
 @model TeknoForce.Pages.Shop.DetailsModel
 
-<section class="section--padding">
+<section class="product-details-section py-5">
     <div class="container">
-        <div class="row">
-
-            <!-- SOL: GÖRSELLER -->
+        <div class="row g-5">
             <div class="col-lg-6">
-
-                @{
-                    var cover = Model.Product.Medias?
-                    .FirstOrDefault(x => x.IsCover && x.MediaType == "Image");
-
-                    var gallery = Model.Product.Medias?
-                    .Where(x => x.MediaType == "Image")
-                    .ToList();
-                }
-                @if (cover != null)
-                {
-                    <a href="@cover.FilePath"
-                       class="glightbox"
-                       data-gallery="product-gallery">
-
-                        <img id="mainImage"
-                             src="@cover.FilePath"
-                             class="img-fluid mb-3 zoom-image fade-transition"
-                             style="width:100%; object-fit:contain;" />
-
-                    </a>
-                }
-
-                <div class="d-flex gap-2 flex-wrap">
-
-             
-                    @foreach (var img in gallery)
-                    {
-                        <div class="thumb-wrapper">
-                            <a href="@img.FilePath"
-                               class="glightbox"
-                               data-gallery="product-gallery">
-
-                                <img src="@img.FilePath"
-                                     class="thumb-image"
-                                     onclick="changeImage('@img.FilePath', this)"
-                                     style="width:80px; height:80px; object-fit:contain;" />
-
-                            </a>
-                        </div>
+                <div class="gallery-container sticky-top" style="top: 100px;">
+                    @{
+                        var cover = Model.Product.Medias?.FirstOrDefault(x => x.IsCover && x.MediaType == "Image");
+                        var gallery = Model.Product.Medias?.Where(x => x.MediaType == "Image").ToList();
                     }
 
-                   
-                </div>
-                <div class="d-flex gap-2 flex-wrap">
-                @foreach (var media in Model.Product.Medias)
-                {
-                    if (media.MediaType == "Video")
-                    {
-                        <div class="thumb-wrapper video-thumb">
-
-                            <a href="@media.FilePath"
-                               class="glightbox"
-                               data-gallery="product-gallery">
-
-                                <img src="/images/video-placeholder.jpg"
-                                     class="thumb-image"
-                                     style="width:80px; height:80px; object-fit:cover;" />
-
-                                <span class="play-icon">▶</span>
-
+                    <div class="main-stage mb-4">
+                        @if (cover != null)
+                        {
+                            <a href="@cover.FilePath" class="glightbox" data-gallery="product-gallery">
+                                <img id="mainImage" src="@cover.FilePath" class="img-fluid main-img-large" alt="@Model.Product.Name" />
                             </a>
-                        </div>
-                    }
-                }
+                        }
+                    </div>
+
+                    <div class="thumbnails-grid d-flex gap-3 flex-wrap">
+                        @foreach (var img in gallery)
+                        {
+                            <div class="thumb-box @(img.IsCover ? "active-thumb" : "")">
+                                <img src="@img.FilePath" class="thumb-img" onclick="changeImage('@img.FilePath', this)" alt="Thumbnail" />
+                            </div>
+                        }
+
+                        @foreach (var media in Model.Product.Medias.Where(x => x.MediaType == "Video"))
+                        {
+                            <div class="thumb-box video-box">
+                                <a href="@media.FilePath" class="glightbox" data-gallery="product-gallery">
+                                    <img src="/images/video-placeholder.jpg" class="thumb-img" alt="Video" />
+                                    <span class="play-overlay"><i class="bi bi-play-fill"></i></span>
+                                </a>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
 
-            <!-- SAĞ: BİLGİLER -->
             <div class="col-lg-6">
+                <div class="product-header-info mb-4">
+                    <span class="badge bg-soft-primary mb-2">@Model.Product.Brand?.Name</span>
+                    <h1 class="display-5 fw-bold text-dark mb-3">@Model.Product.Name</h1>
 
-                <h2>@Model.Product.Name</h2>
-                <p class="text-muted">@Model.Product.Brand?.Name</p>
+                    <div class="price-box-modern p-4 rounded-4 mb-4">
+                        <div class="d-flex align-items-baseline gap-2">
+                            <span class="main-price">@Model.Product.Price.ToString("N0") ₺</span>
+                            <span class="vat-badge">KDV DAHİL</span>
+                        </div>
+                        <div class="text-muted small mt-1">KDV Hariç: @Model.Product.PriceWithVat.ToString("N0") ₺</div>
+                    </div>
 
-                <div class="mb-3">
-
-                    <h2 style="font-weight:700; font-size:34px;">
-                        @Model.Product.Price.ToString("N0") ₺
-                    </h2>
-
-                    <small class="text-muted">
-                        KDV Dahil: @Model.Product.PriceWithVat.ToString("N0") ₺
-                    </small>
-
+                    <div class="stock-info mb-4 d-flex align-items-center gap-2">
+                        <div class="stock-dot @(Model.Product.Stock > 0 ? "bg-success" : "bg-danger")"></div>
+                        <span class="fw-bold">Stok Durumu:</span> @Model.Product.Stock Adet
+                    </div>
                 </div>
 
-                <p><strong>Stok:</strong> @Model.Product.Stock</p>
-
-                <hr />
-
-                <!-- TEKNİK ÖZELLİKLER -->
                 @if (Model.Product.Specification != null)
                 {
-                    <h4>Teknik Özellikler</h4>
+                    <div class="specs-wrapper mb-5">
+                        <h5 class="fw-bold mb-3 d-flex align-items-center">
+                            <i class="bi bi-gear-wide-connected me-2 text-primary"></i> Teknik Detaylar
+                        </h5>
+                        <div class="specs-grid">
+                            <div class="spec-item"><span>Max Nozzle</span><strong>@Model.Product.Specification.MaxNozzle</strong></div>
+                            <div class="spec-item"><span>Motor Gücü</span><strong>@Model.Product.Specification.MotorPowerHP</strong></div>
+                            <div class="spec-item"><span>Ağırlık</span><strong>@Model.Product.Specification.WeightKg kg</strong></div>
+                        </div>
 
-                    <ul class="list-unstyled">
-                        <li><strong>Max Nozzle:</strong> @Model.Product.Specification.MaxNozzle</li>
-                        <li><strong>Motor Gücü:</strong> @Model.Product.Specification.MotorPowerHP</li>
-                        <li><strong>Ağırlık:</strong> @Model.Product.Specification.WeightKg kg</li>
-                        <li><strong>Set İçeriği:</strong> @Model.Product.Specification.SetContent</li>
-                        <li><strong>Kullanım Alanları:</strong> @Model.Product.Specification.UsageAreas</li>
-                        <li><strong>Kullanılabilir Malzemeler:</strong> @Model.Product.Specification.UsableMaterials</li>
-                    </ul>
+                        <div class="expandable-specs mt-3">
+                            <p class="small text-muted mb-1"><strong>Set İçeriği:</strong> @Model.Product.Specification.SetContent</p>
+                            <p class="small text-muted mb-1"><strong>Kullanım Alanları:</strong> @Model.Product.Specification.UsageAreas</p>
+                        </div>
+                    </div>
                 }
 
-                <hr />
+                <div class="action-stack d-grid gap-3">
+                    <form method="post" id="addToCartForm">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="productId" value="@Model.Product.ProductId" />
+                        <button type="submit" class="btn btn-primary btn-lg w-100 py-3 rounded-pill fw-bold shadow-hover">
+                            <i class="bi bi-cart3 me-2"></i> Sepete Ekle
+                        </button>
+                    </form>
 
-                @{
-                    var message = $"Merhaba {Model.Product.Name} ürünü hakkında bilgi almak istiyorum";
-                    var encodedMessage = Uri.EscapeDataString(message);
-                }
-
-                <form method="post" id="addToCartForm">
-                    @Html.AntiForgeryToken()
-
-                    <input type="hidden" name="productId" value="@Model.Product.ProductId" />
-
-                    <button type="submit" class="btn btn-primary w-100 mt-3">
-                        🛒 Sepete Ekle
-                    </button>
-                </form>
-
-
-                <a href="https://wa.me/905421020523?text=@encodedMessage"
-                   target="_blank"
-                   class="btn btn-success">
-                    WhatsApp ile Sor - Sipariş Ver
-                </a>
-
-
+                    <a href="https://wa.me/905421020523?text=@Uri.EscapeDataString($"Merhaba {Model.Product.Name} hakkında bilgi almak istiyorum")"
+                       target="_blank" class="btn btn-outline-success btn-lg w-100 py-3 rounded-pill fw-bold">
+                        <i class="bi bi-whatsapp me-2"></i> WhatsApp ile Sor / Sipariş Ver
+                    </a>
+                </div>
             </div>
         </div>
 
-        <hr class="mt-5" />
+        <div class="row mt-100">
+            <div class="col-lg-8 mx-auto">
+                <div class="comments-section p-5 rounded-5 bg-light">
+                    <h3 class="fw-bold mb-5 border-bottom pb-3 text-center">Müşteri Deneyimleri</h3>
 
-        <!-- YORUMLAR -->
-        <h3>Müşteri Yorumları</h3>
+                    <div class="comments-list mb-5">
+                        @if (Model.Product.Comments?.Any() == true)
+                        {
+                            @foreach (var comment in Model.Product.Comments)
+                            {
+                                <div class="comment-card mb-4 bg-white p-4 rounded-4 shadow-sm border-0">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h6 class="fw-bold mb-0">@comment.Name</h6>
+                                        <span class="badge bg-light text-muted">@comment.CreatedDate.ToShortDateString()</span>
+                                    </div>
+                                    <p class="text-muted mb-0">@comment.Content</p>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-center py-4">
+                                <i class="bi bi-chat-square-text display-4 text-light-gray mb-3"></i>
+                                <p class="text-muted">Bu ürüne henüz yorum yapılmamış.</p>
+                            </div>
+                        }
+                    </div>
 
-        @if (Model.Product.Comments != null && Model.Product.Comments.Any())
-        {
-            foreach (var comment in Model.Product.Comments)
-            {
-                <div class="mb-3 p-3 border rounded">
-                    <strong>@comment.Name</strong>
-                    <small class="text-muted">
-                        (@comment.CreatedDate.ToShortDateString())
-                    </small>
-                    <p>@comment.Content</p>
+                    <div class="comment-form-wrapper p-4 bg-white rounded-4 border">
+                        <h5 class="fw-bold mb-4">Siz de Değerlendirin</h5>
+                        <form method="post" class="row g-3">
+                            <div class="col-md-6"><input type="text" asp-for="NewComment.Name" placeholder="Adınız" class="form-control premium-input" required /></div>
+                            <div class="col-md-6"><input type="email" asp-for="NewComment.Email" placeholder="Email" class="form-control premium-input" required /></div>
+                            <div class="col-12"><textarea asp-for="NewComment.Content" placeholder="Yorumunuzu buraya yazın..." class="form-control premium-input" rows="4" required></textarea></div>
+                            <div class="col-12 text-end"><button type="submit" class="btn btn-dark px-5 py-2 rounded-pill fw-bold">Yorumu Gönder</button></div>
+                        </form>
+                    </div>
                 </div>
-            }
-        }
-        else
-        {
-            <p>Henüz onaylanmış yorum bulunmamaktadır.</p>
-        }
-
-        <hr />
-
-        <!-- YORUM FORM -->
-        <h4>Yorum Yap</h4>
-
-        <form method="post">
-            <input type="text"
-                   asp-for="NewComment.Name"
-                   placeholder="Adınız"
-                   class="form-control mb-2"
-                   required />
-
-            <input type="email"
-                   asp-for="NewComment.Email"
-                   placeholder="Email"
-                   class="form-control mb-2"
-                   required />
-
-            <textarea asp-for="NewComment.Content"
-                      placeholder="Yorumunuz"
-                      class="form-control mb-2"
-                      required></textarea>
-
-            <button type="submit" class="btn btn-dark">
-                Gönder
-            </button>
-        </form>
-
+            </div>
+        </div>
     </div>
 </section>
 <script>
@@ -229,45 +174,110 @@
     });
 </script>
 <style>
-    .thumb-wrapper {
-        display: inline-block;
-        margin: 5px;
+    /* Genel Stil */
+    .product-details-section {
+        background: #fff;
     }
 
-    .thumb-image {
-        border: 2px solid transparent;
-        padding: 5px;
+    .mt-100 {
+        margin-top: 100px;
+    }
+
+    /* Galeri ve Görsel */
+    .main-stage {
+        background: #f8f9fa;
+        border-radius: 30px;
+        padding: 50px;
+        text-align: center;
+        border: 1px solid #f0f0f0;
+    }
+
+    .main-img-large {
+        max-height: 500px;
+        object-fit: contain;
+        transition: opacity 0.3s ease;
+    }
+
+    .thumb-box {
+        width: 90px;
+        height: 90px;
+        border: 2px solid #f0f0f0;
+        border-radius: 15px;
+        padding: 8px;
         cursor: pointer;
-        transition: all .25s ease;
-        border-radius: 8px;
+        transition: 0.3s;
+        background: #fff;
     }
-
-        .thumb-image:hover {
-            transform: translateY(-3px);
-        }
 
     .active-thumb {
-        border: 2px solid #ff7a00; /* turuncu */
-        box-shadow: 0 0 10px rgba(255,122,0,.3);
+        border-color: #ff7a00;
+        box-shadow: 0 5px 15px rgba(255,122,0,0.1);
     }
 
-    .fade-transition {
-        transition: opacity .2s ease;
-    }
-    .video-thumb {
-        position: relative;
-    }
-
-    .play-icon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 20px;
+    /* Fiyat Alanı */
+    .price-box-modern {
+        background: #1a237e;
         color: white;
-        background: rgba(0,0,0,.6);
-        padding: 5px 8px;
-        border-radius: 50%;
+    }
+
+    .main-price {
+        font-size: 2.8rem;
+        font-weight: 800;
+    }
+
+    .vat-badge {
+        font-size: 0.75rem;
+        background: rgba(255,255,255,0.2);
+        padding: 4px 10px;
+        border-radius: 5px;
+    }
+
+    /* Teknik Detay Grid */
+    .specs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 15px;
+    }
+
+    .spec-item {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 15px;
+        border: 1px solid #eee;
+    }
+
+        .spec-item span {
+            display: block;
+            font-size: 0.75rem;
+            color: #888;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .spec-item strong {
+            color: #1a237e;
+            font-size: 1rem;
+        }
+
+    /* Formlar */
+    .premium-input {
+        background: #f8f9fa;
+        border: 1px solid #eee;
+        padding: 12px 20px;
+        border-radius: 12px;
+    }
+
+        .premium-input:focus {
+            background: #fff;
+            border-color: #1a237e;
+            box-shadow: none;
+        }
+
+    /* Butonlar */
+    .shadow-hover:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(26, 35, 126, 0.2);
+        transition: 0.3s;
     }
 
 </style>

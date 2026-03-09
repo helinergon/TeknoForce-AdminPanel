@@ -4,78 +4,92 @@
     Layout = "_Layout";
 }
 
-<h2>Sepetim</h2>
+<section class="cart-section py-5">
+    <div class="container">
+        <h2 class="fw-bold mb-4 border-bottom pb-3"><i class="bi bi-cart3 me-2 text-primary"></i> Sepetim</h2>
 
-@if (Model.CartItems.Any())
-{
+        @if (Model.CartItems.Any())
+        {
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="cart-items-wrapper shadow-sm rounded-4 overflow-hidden">
+                        <form method="post" id="cartForm">
+                            @Html.AntiForgeryToken()
+                        </form>
 
-    <table class="table">
-        <form method="post" id="cartForm">
-            @Html.AntiForgeryToken()
-        </form>
+                        @foreach (var item in Model.CartItems)
+                        {
+                            <div class="cart-item-row p-4 bg-white border-bottom">
+                                <div class="row align-items-center">
+                                    <div class="col-md-5">
+                                        <h6 class="fw-bold mb-1 text-dark">@item.ProductName</h6>
+                                        <small class="text-muted">Birim Fiyat: @item.UnitPrice.ToString("N0") ₺</small>
+                                    </div>
 
-        <thead>
-            <tr>
-                <th>Ürün</th>
-                <th>Adet</th>
-                <th>Fiyat</th>
-                <th>Toplam</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.CartItems)
-            {
-                <tr>
-                    <td>@item.ProductName</td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-secondary decrease"
-                                data-id="@item.ProductId">
-                            -
-                        </button>
+                                    <div class="col-md-3 text-center">
+                                        <div class="qty-control d-inline-flex align-items-center border rounded-pill p-1 bg-light">
+                                            <button class="btn btn-sm rounded-circle decrease" data-id="@item.ProductId">
+                                                <i class="bi bi-dash"></i>
+                                            </button>
+                                            <span class="px-3 fw-bold qty-@item.ProductId">@item.Quantity</span>
+                                            <button class="btn btn-sm rounded-circle increase" data-id="@item.ProductId">
+                                                <i class="bi bi-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
 
-                        <span class="mx-2 qty-@item.ProductId">
-                            @item.Quantity
-                        </span>
+                                    <div class="col-md-3 text-end">
+                                        <span class="fw-bold text-primary fs-5">@item.TotalPrice.ToString("N0") ₺</span>
+                                    </div>
 
-                        <button class="btn btn-sm btn-outline-secondary increase"
-                                data-id="@item.ProductId">
-                            +
-                        </button>
-                    </td>
-                    <td>@item.UnitPrice.ToString("N0") ₺</td>
-                    <td>@item.TotalPrice.ToString("N0") ₺</td>
-                    <td>
-                        <button class="btn btn-sm btn-danger remove"
-                                data-id="@item.ProductId">
-                            Sil
-                        </button>
-                    </td>
+                                    <div class="col-md-1 text-end">
+                                        <button class="btn btn-link text-danger remove p-0" data-id="@item.ProductId">
+                                            <i class="bi bi-trash3 fs-5"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
 
-                </tr>
+                <div class="col-lg-4">
+                    <div class="summary-card p-4 rounded-4 shadow-sm bg-white sticky-top" style="top: 100px;">
+                        <h5 class="fw-bold mb-4">Sipariş Özeti</h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Ürünler Toplamı</span>
+                            <span class="fw-bold">@Model.Total.ToString("N0") ₺</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4 border-bottom pb-3">
+                            <span>Kargo</span>
+                            <span class="text-success fw-bold">Ücretsiz</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4 mt-2">
+                            <span class="fs-5 fw-bold">Genel Toplam</span>
+                            <span class="fs-4 fw-bold text-primary">@Model.Total.ToString("N0") ₺</span>
+                        </div>
 
+                        <a asp-page="/Checkout/Index" class="btn btn-primary btn-lg w-100 py-3 rounded-pill fw-bold shadow-hover mb-2">
+                            ÖDEMEYE GEÇ <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                        <a href="/Shop" class="btn btn-link w-100 text-muted text-decoration-none small">
+                            Alışverişe Devam Et
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="empty-cart text-center py-5">
+                <i class="bi bi-cart-x display-1 text-light-gray mb-3 d-block"></i>
+                <h4 class="text-muted">Sepetiniz şu an boş görünüyor.</h4>
+                <a href="/Shop" class="btn btn-primary rounded-pill px-5 mt-3">Ürünleri Keşfet</a>
+            </div>
+        }
+    </div>
+</section>
 
-            }
-            
-
-
-
-        </tbody>
-       
-    </table>
-
-    <h4 class="text-end">
-        Genel Toplam: @Model.Total.ToString("N0") ₺
-    </h4>
-
-    <a asp-page="/Checkout/Index"
-       class="btn btn-primary w-100 mt-4">
-        Ödemeye Geç
-    </a>
-}
-else
-{
-    <p>Sepetiniz boş.</p>
-}
 
 <script>
     function updateCart(handler, productId) {
@@ -116,3 +130,60 @@ else
         });
     });
 </script>
+
+<style>
+    /* Sepet Arka Plan ve Kartlar */
+    .cart-section {
+        background-color: #fcfcfc;
+        min-height: 80vh;
+    }
+
+    .cart-items-wrapper {
+        border: 1px solid #f0f0f0;
+    }
+
+    /* Her Bir Satır */
+    .cart-item-row {
+        transition: 0.3s;
+    }
+
+        .cart-item-row:hover {
+            background-color: #fdfdfd !important;
+        }
+
+    /* Miktar Kontrolü */
+    .qty-control {
+        border: 1px solid #eee !important;
+    }
+
+        .qty-control .btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid #eee;
+        }
+
+            .qty-control .btn:hover {
+                background: #ff7a00;
+                color: white;
+                border-color: #ff7a00;
+            }
+
+    /* Özet Kartı */
+    .summary-card {
+        border: 1px solid #f0f0f0;
+    }
+
+    .text-light-gray {
+        color: #dee2e6;
+    }
+
+    /* Buton Efekti */
+    .shadow-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(26, 35, 126, 0.2);
+    }
+</style>

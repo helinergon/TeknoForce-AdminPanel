@@ -56,17 +56,194 @@
 
     </div>
     <style>
-        /* Genel Arka Plan */
-        body {
-            background-color: #f4f6f9 !important; /* Açık gri endüstriyel fon */
-            color: #333;
+
+        /* Geniş Banner Yapısı */
+        .support__banner {
+            background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+            border-radius: 30px;
+            padding: 50px 40px;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            box-shadow: 0 20px 50px rgba(26, 35, 126, 0.3);
         }
 
-        /* Marka Alanı Arka Planı (Hafif Karanlık/Premium) */
-        .brand-showcase-bg {
-            background: radial-gradient(circle at center, #1e293b 0%, rgba(0,0,0,0.2) 100%);
-            padding: 100px 0;
+        .banner__title {
+            font-size: 2.9rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #fff;
         }
+
+        .banner__text {
+            font-size: 1.30rem; /* 1.1'den 1.25'e çıkardık, artık çok daha net */
+            margin-bottom: 30px;
+            line-height: 1.8; /* Satır aralığını açtık ki cümleler birbirine girmesin */
+            font-weight: 400;
+            max-width: 800px; /* Metin çok yayılıp gözü yormasın diye genişliğini sınırladık */
+            color:#fff
+        }
+
+        /* Mobilde yazı hala çok devasa durmasın diye küçük bir ayar */
+        @@media (max-width: 768px) {
+            .banner__text {
+                font-size: 1.1rem;
+                line-height: 1.6;
+            }
+
+            .banner__title {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* 7/24 Rozeti (Daha kurumsal) */
+        .support__banner-badge {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff7a00;
+            padding: 8px 25px;
+            border-radius: 0 0 15px 15px;
+            font-weight: 800;
+            font-size: 1.85rem;
+            letter-spacing: 1px;
+        }
+
+        /* Hareketli İkon Efekti */
+        .banner__icon-circle {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: #ff7a00;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Hemen Bağlan Butonu (Geniş ve Belirgin) */
+        .banner__cta {
+            background: #ff7a00;
+            color: white !important;
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(255, 122, 0, 0.3);
+        }
+        
+            .banner__cta:hover {
+                transform: scale(1.05);
+                background: #fff;
+                color: #1a237e !important;
+            }
+
+        /* Küçük Özellik Yazıları */
+        .banner__features {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @@media (min-width: 992px) {
+            .banner__features {
+                justify-content: flex-start;
+            }
+        }
+
+        .banner__features span {
+            font-size: 0.9rem;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 12px;
+            border-radius: 8px;
+        }
+
+
+
+        :root {
+            --primary-navy: #1a237e;
+            --accent-orange: #ff7a00;
+            --main-gradient: radial-gradient(circle, rgba(181,171,152,0.84) 0%, rgba(175,183,215,0.90) 100%);
+        }
+
+        /* 1. TÜM SAYFA ARKA PLANI */
+        body {
+            background: rgb(181,171,152);
+            background: var(--main-gradient) !important;
+            background-attachment: fixed; /* Sayfa kaysa da arka plan sabit kalır, derinlik katar */
+            min-height: 100vh;
+            font-family: 'Karma', sans-serif;
+        }
+
+        /* 2. TÜM KARTLARIN (MARKA, ÜRÜN, KATEGORİ) CAM EFEKTİ */
+        .premium-brand-card, .product__card, .category-custom-card, .custom-card, .banner__box {
+            background: rgba(255, 255, 255, 0.15) !important;
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            border-radius: 20px !important;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+
+            /* 3. KART HOVER (ÜSTÜNE GELİNCE) */
+            .premium-brand-card:hover, .product__card:hover, .category-custom-card:hover {
+                transform: translateY(-12px) scale(1.02);
+                background: rgba(255, 255, 255, 0.25) !important;
+                border-color: var(--accent-orange) !important;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.15) !important;
+            }
+
+        
+
+        /* Başlıklar */
+        .section-title-bold {
+            color: var(--primary-navy);
+            font-weight: 800;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        /* Ana Arka Plan Gradients */
+        .brand-showcase-bg {
+            background: rgb(181,171,152);
+            background: radial-gradient(circle, rgba(181,171,152,0.84) 0%, rgba(175,183,215,0.90) 100%);
+            padding: 80px 0; /* Üstten ve alttan boşluk */
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Kartların daha belirgin durması için hafif bir gölge ve cam efekti (Glassmorphism) */
+        .premium-brand-card {
+            background: rgba(255, 255, 255, 0.15); /* Arka plana uyumlu şeffaf beyaz */
+            backdrop-filter: blur(10px); /* Cam efekti */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s ease-in-out;
+        }
+
+            .premium-brand-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                border-color: rgba(255, 255, 255, 0.5);
+            }
+        /* Genel Arka Plan */
+      
+
+        /* Marka Alanı Arka Planı (Hafif Karanlık/Premium) */
+        
 
         /* Premium Marka Kartı */
         .premium-brand-card {
@@ -202,10 +379,7 @@
             --dark-slate: #0f172a;
         }
 
-        body {
-            background-color: var(--industrial-gray) !important;
-            font-family: 'Karma', sans-serif;
-        }
+     
 
         /* Profesyonel Kart Yapısı */
         .custom-card {
@@ -348,22 +522,9 @@
             padding: 15px;
             background: #fff;
         }
-        /* Arka planı hafif gri yapalım ki kartlar patlasın */
-        .bg-light-gray {
-            background-color: #f8f9fa;
-        }
-
+        
         /* Kart Tasarımı */
-        .category-custom-card {
-            background: #fff;
-            border: 2px solid #1a237e; /* İstediğin lacivert çerçeve */
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            transition: all 0.3s ease-in-out;
-            text-align: center;
-            height: 100%;
-        }
+        
 
         /* Görsel Alanı */
         .card-img-box {
@@ -525,16 +686,7 @@
         }
 
         /* Kartları Modernleştirme */
-        .product__card {
-            border: 1px solid rgba(0,0,0,0.05) !important;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-            .product__card:hover {
-                transform: translateY(-12px) scale(1.02);
-                box-shadow: 0 25px 50px rgba(255,122,0,0.15) !important;
-                border-color: var(--primary-orange) !important;
-            }
+        .
 
         /* Glassmorphism Navbar */
         .header__sticky.sticky {
@@ -601,13 +753,7 @@
             --light-bg: #f8fafc;
         }
 
-        body {
-            background: var(--light-bg);
-        }
-
-        .section--padding {
-            padding: 80px 0;
-        }
+        
     </style>
 
     <script>
